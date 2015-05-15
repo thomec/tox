@@ -1,0 +1,38 @@
+{% extends 'rango/base.html' %}
+
+{% load staticfiles %}
+
+{% block body %}
+    <h1>Rango</h1>
+
+    {% if categories %}
+        <h2>Categories</h2>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="{% url 'rango:category' category.slug %}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No categories present<p>
+    {% endif %}
+
+    {% if pages %}
+        <h2>Pages</h2>
+        <ul>
+            {% for page in pages %}
+                <li>
+                    <a href="{{ page.url }}">
+                        {{ page.title }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No pages available</p>
+    {% endif %}
+    
+{% endblock %}
