@@ -31,6 +31,9 @@ urlpatterns = [
         #url(r'^$', include('rango.urls', namespace='rango')),
         url(r'^admin/', include(admin.site.urls)),
         url(r'^rango/', include('rango.urls', namespace='rango')),
+        url(r'^polls/', include('polls.urls', namespace='polls')),
+        url(r'^pollit/', include('pollit.urls', namespace='pollit')),
+        url(r'^pollngo/', include('pollngo.urls', namespace='pollngo')),
         ]
 
 if settings.DEBUG:

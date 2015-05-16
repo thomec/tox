@@ -1,0 +1,54 @@
+{% extends 'polls/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Results{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Results of poll "{{ poll.title }}"</h1>
+    </div>
+
+    <div class="row placeholders">
+        <div class="col-xs-12 col-sm-8 placeholder">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3>Questions</h3>
+                </div>
+            </div>
+
+            {% if questions %}
+                <ul class="list-group">
+                    {% for question in questions %}
+                        <li class="list-group-item">
+                            <div class="col-sm-6 placeholder">
+                                <a href="{% url 'polls:question' question=question.id %}">
+                                    {{ question.text }}
+                                </a>
+                                All: {{ question.count_votes }}
+                            </div>
+                            <div class="col-sm-6 placeholder">
+                                {% if question.answer_set.all %}
+                                    <ul class="list-group">
+                                        {% for answer in question.answer_set.all %}
+                                            <li class="list-group-item">
+                                                {{ answer.text }}:
+                                                {{ answer.count_votes }} votes.
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <strong>No answers available</strong>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No questions available</strong>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
