@@ -14,33 +14,35 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3>Questions</h3>
+                    <h3>Results for Questions</h3>
                 </div>
             </div>
 
             {% if questions %}
-                <ul class="list-group">
+                <ul class="list-group placeholders">
                     {% for question in questions %}
                         <li class="list-group-item">
-                            <div class="col-sm-6 placeholder">
-                                <a href="{% url 'polls:question' question=question.id %}">
-                                    {{ question.text }}
-                                </a>
-                                All: {{ question.count_votes }}
-                            </div>
-                            <div class="col-sm-6 placeholder">
-                                {% if question.answer_set.all %}
-                                    <ul class="list-group">
-                                        {% for answer in question.answer_set.all %}
-                                            <li class="list-group-item">
-                                                {{ answer.text }}:
-                                                {{ answer.count_votes }} votes.
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                {% else %}
-                                    <strong>No answers available</strong>
-                                {% endif %}
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a href="{% url 'polls:question' question=question.id %}">
+                                        {{ question.text }}
+                                    </a>
+                                    <p>All: {{ question.count_votes }}</p>
+                                </div>
+                                <div class="col-sm-8">
+                                    {% if question.answer_set.all %}
+                                        <ul class="list-group">
+                                            {% for answer in question.answer_set.all %}
+                                                <li class="list-group-item">
+                                                    {{ answer.text }}:
+                                                    {{ answer.count_votes }} votes.
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <strong>No answers available</strong>
+                                    {% endif %}
+                                </div>
                             </div>
                         </li>
                     {% endfor %}
