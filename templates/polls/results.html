@@ -7,6 +7,7 @@
 {% block body %}
     <div class="page-header">
         <h1>Results of poll "{{ poll.title }}"</h1>
+        <h3>message = {{ message }}</h3>
     </div>
 
     <div class="row placeholders">
@@ -27,7 +28,7 @@
                                     <a href="{% url 'polls:question' question=question.id %}">
                                         {{ question.text }}
                                     </a>
-                                    <p>All: {{ question.count_votes }}</p>
+                                    <p>Total votes: {{ question.count_votes }}</p>
                                 </div>
                                 <div class="col-sm-8">
                                     {% if question.answer_set.all %}

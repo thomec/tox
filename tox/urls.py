@@ -20,10 +20,19 @@ Including another URLconf
 
 from django.conf.urls import include, url, patterns
 from django.contrib import admin
+from registration.backends.simple.views import RegistrationView
 
 # wenn DEBUG = False
 from django.conf import settings
 from django.conf.urls.static import static
+
+
+# overwrite success_url in redux when registration complete
+class MyRegistrationView(RegistrationView):
+    # modify urlpatterns so that accounts/register
+    # points to MyRegistrationView.as_view()
+    def get_success_url(self, request, user):
+        return '/rango/'
 
 
 
@@ -34,6 +43,7 @@ urlpatterns = [
         url(r'^polls/', include('polls.urls', namespace='polls')),
         url(r'^pollit/', include('pollit.urls', namespace='pollit')),
         url(r'^pollngo/', include('pollngo.urls', namespace='pollngo')),
+        url(r'^accounts/', include('registration.backends.simple.urls'))
         ]
 
 if settings.DEBUG:

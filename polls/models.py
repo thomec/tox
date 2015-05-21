@@ -39,7 +39,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question)
     text = models.CharField(max_length=255)
-    value = models.IntegerField(default=0)
+    #value = models.IntegerField(default=0)
     number = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
@@ -60,6 +60,7 @@ class Vote(models.Model):
     questions = models.ManyToManyField(Question)
     answers = models.ManyToManyField(Answer)
     timestamp = models.DateTimeField(auto_now_add=True)
+    sessionid = models.CharField(max_length=32)
 
     def __str__(self):
         return "Vote on Poll {0} at {1}".format(self.poll, self.timestamp)

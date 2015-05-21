@@ -42,14 +42,31 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a href="{% url 'rango:index' %}" class="navbar-brand">
-                        Rango
+                        {% if user.is_authenticated %}
+                        Rango - {{ user.username }}: {{ visits }}
+                        {% else %}
+                        Rango: {{ visits }}
+                        {% endif %}
                     </a>
+                    {% if user.is_authenticated %}
+                    Hello {{ user.username }}
+                    {% endif %}
                 </div>
 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{% url 'rango:index' %}">Home</a></li>
-                        <li><a href="{% url 'rango:add_category' %}">Add Category</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'rango:add_category' %}">Add Category</a></li>
+                            <li>
+                                <a href="{% url 'auth_logout' %}?next={% url 'rango:index' %}">
+                                    Logout
+                                </a>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'registration_register' %}">Register</a></li>
+                            <li><a href="{% url 'auth_login' %}">Login</a></li>
+                        {% endif %}                        
                         <li><a href="{% url 'rango:about' %}">About</a></li>
                     </ul>
                 </div>

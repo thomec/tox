@@ -1,5 +1,6 @@
 # tox/settings.py
 
+
 """
 Django settings for tox project.
 
@@ -13,9 +14,10 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -28,10 +30,12 @@ SECRET_KEY = '4suxcw2cz@o6lx*t1i88zik!h&(b3)(vg#)s%1yqw-ayv=(0qw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# needed if not DEBUG
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'beule']
 
 
-# Application definition
+# Applications and middelware settings
+# set urls.py
 
 INSTALLED_APPS = (
         'django.contrib.admin',
@@ -40,6 +44,7 @@ INSTALLED_APPS = (
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'registration', # django-registration-redux
         'rango',
         'polls',
         'pollit',
@@ -59,7 +64,10 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'tox.urls'
 
+
+# Template engine
 # added from tango to use in TEMPLATES
+
 TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
 
 TEMPLATES = [
@@ -77,7 +85,6 @@ TEMPLATES = [
                 },
         },
         ]
-
 
 WSGI_APPLICATION = 'tox.wsgi.application'
 
@@ -120,6 +127,8 @@ STATIC_URL = '/static/'
 
 
 # added from tango
+# static and media files
+
 STATIC_PATH = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
         STATIC_PATH,
@@ -129,13 +138,28 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# print additional information on screen
+# registration
+# django-registration-redux
+
+REGISTRATION_OPEN = True        # If True, users can register
+ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
+LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
+                                # and are trying to access pages requiring authentication
+
+
+# additional information
+# print environment vars on screen
 
 if DEBUG:
-    print("BASE_DIR = "+BASE_DIR)
+    print("reading settings from:\n\t"+os.path.abspath(__file__))
+
+    print("BASE_DIR      = "+str(BASE_DIR))
     print("TEMPLATE_DIRS = "+str(TEMPLATES[0]['DIRS']))
-    print("STATIC_PATH = "+str(STATIC_PATH))
-    print("MEDIA_ROOT"+str(MEDIA_ROOT))
-    print("MEDIA_ROOT = "+str(MEDIA_ROOT))
+    print("STATIC_PATH   = "+str(STATIC_PATH))
+    print("MEDIA_ROOT    = "+str(MEDIA_ROOT))
+    print("MEDIA_URL     = "+str(MEDIA_URL))
+    print("\n\n")
 
 

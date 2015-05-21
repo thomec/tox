@@ -28,7 +28,14 @@
         {% endif %}
 
         <hr />
-        <a href="{% url 'rango:add_page' category.slug %}">Add page</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'rango:add_page' category.slug %}">Add page</a>
+        {% else %}
+            <P>You can't add pages as you are not
+            <a href="{% url 'auth_login' %}">
+                logged in
+            </a>
+        {% endif %}
 
     {% else %}
         <strong>This category does not exist</strong>

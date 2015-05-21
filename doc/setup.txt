@@ -1,0 +1,12 @@
+Fix warning on using ForeignKey vs OneToOneField
+================================================
+
+The django-registration-reux package triggers a warning:
+    WARNINGS:
+        registration.RegistrationProfile.user: (fields.W342) Setting unique=True on a ForeignKey has the same effect as using a OneToOneField.
+        HINT: ForeignKey(unique=True) is usually better served by a OneToOneField.
+
+To resolve that issue modify python3.4/site-packages/registration/models.py in line 189:
+
+    -    user = models.ForeignKey(UserModelString(), unique=True, verbose_name=_('user'))
+    +    user = models.OneToOneField(UserModelString(), verbose_name=_('user'))
