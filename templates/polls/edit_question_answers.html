@@ -6,11 +6,11 @@
 
 {% block body %}
     <div class="page-header">
-        <h1>Edit Poll</h1>
+        <h1>Edit Question</h1>
     </div>
 
     <form id="form" class="form-inline"
-        method="POST" action="{% url 'polls:edit_poll_questions' poll.id %}">
+        method="POST" action="{% url 'polls:edit_question_answers' question.id %}">
         {% csrf_token %}
 
         {% if form.non_field_errors %}
@@ -56,7 +56,7 @@
 		    {{ field.help_text }}
 		    <div>
 			{{ field.label_tag }} {{ field }}
-        	    </div>
+		    </div>
 		    <div id="{{ field.auto_id }}_errors">
 			{{ field.errors }}
 		    </div>

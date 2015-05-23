@@ -30,6 +30,14 @@ def about(request):
     return render(request, 'polls/about.html', {})
 
 
+def polls(request):
+
+    polls = Poll.objects.all()
+
+    context = {'polls':polls}
+    return render(request, 'polls/polls.html', context)
+
+
 def poll(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
@@ -75,7 +83,9 @@ def vote(request, question):
         vote.sessionid = request.session.session_key
         vote.save()
        
-    return HttpResponseRedirect(reverse('polls:results', args=(poll.id,)))
+    return HttpResponseRedirect(
+            reverse('polls:results', args=(poll.id,))
+            )
 
 
 def results(request, poll):
@@ -86,17 +96,14 @@ def results(request, poll):
     
     return render(request, 'polls/results.html', context)
 
+
 def edit_poll_questions(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
     questions = poll.question_set.all()
 
-    text = 'Töpfchenhexe'
-
     form = PollForm(request.POST or None, instance=poll)
-    formset = QuestionFormSet(request.POST or None)
-    for qform in formset:
-        qform.instance.text = text
+    formset = QuestionFormSet(request.POST or None, instance=poll)
 
     context = {
             'poll': poll,
@@ -105,17 +112,43 @@ def edit_poll_questions(request, poll):
             'formset': formset
     }
 
-    if form.is_valid():
+    if form.is_valid() and formset.is_valid():
         form.save()
-        return HttpResponseRedirect(reverse('polls:index'))
+        formset.save()
+        return HttpResponseRedirect(
+                reverse('polls:poll',args=(poll.id,))
+                )
+
 
     else:
         print(form.errors)
-    
     
     return render(request, 'polls/edit_poll_questions.html', context)
 
 
 def edit_question_answers(request, question):
-    pass
+
+    question = get_object_or_404(Question, id=question)
+    answers = question.answer_set.all()
+
+    form = QuestionForm(request.POST or None, instance=question)
+    formset = AnswerFormSet(request.POST or None, instance=question)
+
+    context = {
+            'question': question,
+            'answer': answers,
+            'form': form,
+            'formset': formset
+    }
+
+    if form.is_valid() and formset.is_valid():
+        form.save()
+        formset.save()
+        return HttpResponseRedirect(reverse('polls:index'))
+
+    else:
+        print(form.errors)
+    
+    return render(request, 'polls/edit_question_answers.html', context)
+
 

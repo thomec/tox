@@ -22,9 +22,14 @@
                 <ul class="list-group">
                     {% for question in questions %}
                         <li class="list-group-item">
-                            <a href="{% url 'polls:question' question=question.id %}">
+                            <a href="{% url 'polls:question' question.id %}">
                                 {{ question.text }}
                             </a>
+                            <a class="btn btn-default btn-sm"
+                                href="{% url 'polls:edit_question_answers' question.id %}">
+                                Edit
+                            </a>
+
                         </li>
                     {% endfor %}
                 </ul>

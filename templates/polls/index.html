@@ -36,11 +36,11 @@
 			</div>
                     </div>
                     {% endfor %}
-                    <br/>
+                    <div><p>&nbsp;</p><div>
                     <button class="btn btn-success" type="submit" name="submit" value="Edit">
                         <i class="fa fa-check"></i>&nbsp;Save
                     </button>
-                    <br/>
+                    <div><p>&nbsp;</p><div>
                 </form>
             </div>
         </div>
@@ -48,12 +48,12 @@
 
     <div class="row placeholders">
         <div class="col-xs-12 col-sm-6 placeholder">
-
+            <a href="{% url 'polls:polls' %}">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3>Polls</h3>
                 </div>
-            </div>
+            </div></a>
 
             {% if polls %}
                 <ul class="list-group">

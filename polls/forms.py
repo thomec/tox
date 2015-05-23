@@ -24,6 +24,13 @@ class PollForm(forms.ModelForm):
         fields = ['title', 'description']
 
 
+class QuestionForm(forms.ModelForm):
+
+    class Meta:
+        model = Question
+        fields = ['text']
+
+
 class PollQuestionForm(forms.Form):
 
     poll_title = forms.CharField(
@@ -48,10 +55,10 @@ class PollQuestionForm(forms.Form):
 
 
 QuestionFormSet = inlineformset_factory(Poll, Question,
-        fields=['text'],
+        fields=['id','text'],
+        #exclude=[],
         widgets={
-                'poll': forms.HiddenInput(),
-                'pub_date': forms.DateTimeInput(),
+                'id': forms.HiddenInput(),
                 'text': forms.TextInput(attrs={'class': 'form-control'})
                 }
         )
