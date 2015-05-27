@@ -45,18 +45,14 @@
             </div>
         </div>
 
-
     <div class="row placeholders">
         <div class="col-xs-12 col-sm-6 placeholder">
-            <a href="{% url 'polls:polls' %}">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3>Polls</h3>
-                </div>
-            </div></a>
+            <a href="{% url 'polls:polls' %}" class="btn btn-primary btn-block" role="button">
+                <h3>Polls</h3>
+            </a>
 
             {% if polls %}
-                <ul class="list-group">
+                <ul class="list-group text-left">
                     {% for poll in polls %}
                         <li class="list-group-item">
                             <a href="{% url 'polls:poll' poll=poll.id %}">
@@ -71,17 +67,21 @@
         </div>
 
         <div class="col-xs-12 col-sm-6 placeholder">
-
+            {% comment 'panel without button' %}
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3>Questions</h3>
                 </div>
             </div>
+            {% endcomment %}
+            <a href="{% url 'polls:questions' %}" class="btn btn-primary btn-block" role="button">
+                <h3>Questions</h3>
+            </a>
 
             {% if questions %}
                 <ul class="list-group">
                     {% for question in questions %}
-                        <li class="list-group-item">
+                        <li class="list-group-item text-left">
                             <a href="{% url 'polls:question' question=question.id %}">
                                 {{ question.text }}
                             </a>

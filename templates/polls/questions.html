@@ -1,0 +1,35 @@
+{% extends 'polls/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Polls{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Polls</h1>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>Polls</h3>
+        </div>
+    </div>
+
+    {% if polls %}
+        <ul class="list-group">
+            {% for poll in polls %}
+                <li class="list-group-item">
+                    <a href="{% url 'polls:poll' poll.id %}">
+                        {{ poll.title }}
+                    </a>
+                    <a class="btn btn-default btn-sm" href="{% url 'polls:edit_poll_questions' poll.id %}" role="button">
+                        Edit
+                    </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No polls present</strong>
+            {% endif %}
+
+       {% endblock %}

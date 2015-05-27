@@ -46,7 +46,21 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{% url 'polls:index' %}">Home</a></li>
-                        <li><a href="{% url 'polls:index' %}">Add Poll</a></li>
+                        {% if poll %}
+                            <li>
+                                <a href="{% url 'polls:edit_poll_questions' poll.id %}">
+                                    Edit Poll
+                                </a>
+                            </li>
+                        {% endif %}
+                        {% if question %}
+                            <li>
+                                <a href="{% url 'polls:edit_question_answers' question.id %}">
+                                    Edit Question
+                                </a>
+                            </li>
+                        {% endif %}
+
                         <li><a href="{% url 'polls:about' %}">About</a></li>
                     </ul>
                 </div>

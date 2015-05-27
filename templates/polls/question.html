@@ -7,7 +7,7 @@
 {% block body %}
     <div class="page-header">
         <h1>Question: "{{ question.text }}"</h1>
-        <h3>message= {{message}}</h3>
+        <h5>{{message}}</h5>
     </div>
 
     <div class="row placeholders">
@@ -20,35 +20,23 @@
             </div>
 
             {% if answers %}
-                <ul class="list-group">
+                {% if error_message %}
+                    <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+                
+                <form action="{% url 'polls:vote' question=question.id %}" method="post">
+                    {% csrf_token %}
+
                     {% for answer in answers %}
-                        <li class="list-group-item">
-                            <a href="{% url 'polls:question' question=question.id %}">
-                                {{ answer.text }}
-                            </a>
-                        </li>
+                        <button class="btn btn-primary" type="submit"
+                            value="{{ answer.id }}" name="choice" id="answer{{ forloop.counter }}">
+                            {{ answer.text }}
+                         </button>
                     {% endfor %}
-                </ul>
+                </form>
             {% else %}
                 <strong>No questions available</strong>
             {% endif %}
-
-            <hr />
-
-            {% if error_message %}
-                <p><strong>{{ error_message }}</strong></p>
-            {% endif %}
-                
-            <form action="{% url 'polls:vote' question=question.id %}" method="post">
-                {% csrf_token %}
-
-                {% for answer in answers %}
-                <button class="btn btn-primary" type="submit"
-                    value="{{ answer.id }}" name="choice" id="answer{{ forloop.counter }}">
-                        {{ answer.text }}
-                    </button>
-                {% endfor %}
-            </form>
 
         </div>
     </div>

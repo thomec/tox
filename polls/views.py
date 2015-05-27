@@ -33,16 +33,25 @@ def about(request):
 def polls(request):
 
     polls = Poll.objects.all()
-
-    context = {'polls':polls}
+    title = "Poll list"
+    context = {'polls':polls, 'title': title}
     return render(request, 'polls/polls.html', context)
+
+
+def questions(request):
+
+    questions = question.objects.all()
+    title = "Question list"
+    context = {'questions': questions, 'title': title}
+    return render(request, 'polls/questions.html', context)
 
 
 def poll(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
     questions = poll.question_set.all()
-    context = {'poll': poll, 'questions': questions}
+    title = "Poll detail"
+    context = {'poll': poll, 'questions': questions, 'title': title}
 
     return render(request, 'polls/poll.html', context)
 
@@ -50,14 +59,21 @@ def poll(request, poll):
 def question(request, question):
     
     question = get_object_or_404(Question, id=question)
+    poll = question.poll
     answers = question.answer_set.all()
-    context = {'question': question, 'answers': answers}
+    title = 'Question detail'
+    context = {
+            'poll':poll,
+            'question': question,
+            'answers': answers,
+            'title': title
+    }
 
     sessionid = request.session.session_key
     votes = Vote.objects.filter(sessionid=sessionid, questions=question)
     
     if votes:
-        context['message'] = "already voted"
+        context['message'] = "already voted {} times!".format(str(len(votes)))
     else:
         context['message'] = "not voted yet"
 
