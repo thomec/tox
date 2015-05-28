@@ -21,7 +21,6 @@ reader = codecs.getreader("utf-8")
 
 
 # Add your BING_API_KEY
-# BING_API_KEY = 'pZ7Y2OxRZLscWjp4BN6psC38YBOkV4XnA/v6VZVrxjc'
 BING_API_KEY = _keys.BING_API_KEY 
 
 
