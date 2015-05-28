@@ -13,4 +13,6 @@ urlpatterns = patterns('',
             views.add_page,
             name='add_page'),
         url(r'^add_category/$', views.add_category, name='add_category'),
-        )
+        url(r'^search/$', views.search, name='search'),
+)
+

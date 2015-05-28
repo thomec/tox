@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 {% load staticfiles %}
+{% load rango_extras %}
 
 <html lang="en">
     <head>
@@ -43,9 +44,9 @@
                     </button>
                     <a href="{% url 'rango:index' %}" class="navbar-brand">
                         {% if user.is_authenticated %}
-                        Rango - {{ user.username }}: {{ visits }}
+                        Rango - {{ user.username }}: {{ visits }} visits
                         {% else %}
-                        Rango: {{ visits }}
+                        Rango: {{ visits }} visits
                         {% endif %}
                     </a>
                     {% if user.is_authenticated %}
@@ -56,6 +57,7 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="{% url 'rango:index' %}">Home</a></li>
+                        <li><a href="{% url 'rango:search' %}">Search</a></li>
                         {% if user.is_authenticated %}
                             <li><a href="{% url 'rango:add_category' %}">Add Category</a></li>
                             <li>
@@ -77,14 +79,14 @@
         <div class="content container-fluid">
             <div class="row">
 
-                <div class="col-md-3 col-sm-4 sidebar">
+                <div class="col-md-3 col-sm-4 sidebar collapse">
                     <div class="container">
-                        {% block side %}Empty list{% endblock %}
+                        {% block side %}{% get_category_list category %}{% endblock %}
                     </div>
                 </div>
 
                 <div class="col-md-9 col-md-offset-3 col-sm-8 col-sm-offset-4 main">
-                    <div class="container">
+                    <div class="container col-md-12 col-sm-12">
                         {% block body %}Empty block{% endblock %}
                     </div>
                 </div>
