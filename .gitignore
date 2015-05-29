@@ -60,4 +60,4 @@ target/
 .*.swp
 
 # secrets
-_keys.py
+keys.py

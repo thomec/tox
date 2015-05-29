@@ -107,7 +107,9 @@ def search(request):
     if request.method == 'POST':
         query = request.POST['query'].strip()
         if query:
+            print(str(query))
             results = run_query(query)
+            print(results)
 
     return render(request, 'rango/search.html', {'results': results})
 

@@ -13,7 +13,7 @@ import urllib.error
 #  urllib  ->  urllib.parse
 # urllib2  ->  urllib.request
 
-from rango import _keys
+#from .rango import _keys
 
 # json.loads(        response  ) wants str not byte, so change to
 # json.loads( reader(response) )
@@ -21,7 +21,8 @@ reader = codecs.getreader("utf-8")
 
 
 # Add your BING_API_KEY
-BING_API_KEY = _keys.BING_API_KEY 
+# BING_API_KEY = _keys.BING_API_KEY 
+BING_API_KEY = 'pZ7Y2OxRZLscWjp4BN6psC38YBOkV4XnA/v6VZVrxjc'
 
 
 def run_query(search_terms):
