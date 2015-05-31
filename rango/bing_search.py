@@ -3,26 +3,17 @@
 import json
 import codecs
 
-reader = codecs.getreader("utf-8")
-# import urllib, urllib2
 import urllib.parse
 import urllib.request
 import urllib.error
-# rename:
-#     py2  ->  py3
-#  urllib  ->  urllib.parse
-# urllib2  ->  urllib.request
 
-#from .rango import _keys
+# put key in separate file for security reasons
+# exclude keys.py in .gitignore
+from rango.keys import BING_API_KEY
 
 # json.loads(        response  ) wants str not byte, so change to
 # json.loads( reader(response) )
 reader = codecs.getreader("utf-8")
-
-
-# Add your BING_API_KEY
-# BING_API_KEY = _keys.BING_API_KEY 
-BING_API_KEY = 'pZ7Y2OxRZLscWjp4BN6psC38YBOkV4XnA/v6VZVrxjc'
 
 
 def run_query(search_terms):

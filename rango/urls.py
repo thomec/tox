@@ -14,5 +14,6 @@ urlpatterns = patterns('',
             name='add_page'),
         url(r'^add_category/$', views.add_category, name='add_category'),
         url(r'^search/$', views.search, name='search'),
+        url(r'^goto/(?P<page>\d+)/$', views.track, name='goto'),
 )
 

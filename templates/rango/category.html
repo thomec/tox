@@ -2,7 +2,7 @@
 
 {% load staticfiles %}
 
-{% block title %}{{ category.name }} - {{ category.slug }}{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
         
 {% block body %}
     <div class="panel panel-primary">
@@ -13,13 +13,45 @@
     
     {% if category %}
 
+    {# search #}
+        <div class="panel">
+
+            <form class="form-inline" id="user_form"
+                method="post" action="{% url 'rango:category' category.slug %}">
+                {% csrf_token %}
+                <input class="form-control" type="text" size="50" name="query" value="" id="query" />
+                <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+                <br />
+            </form>
+
+            {% if results %}
+                <div class="panel-heading">
+                <h3 class="panel-title">Results</h3>
+                <div class="panel-body">
+                    <div class="list-group">
+                        {% for result in results %}
+                            <div class="list-group-item">
+                                <h4 class="list-group-item-heading">
+                                    <a href="{{ result.link }}">{{ result.title }}</a>
+                                </h4>
+                                <p class="list-group-item-text">{{ result.summary }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+
         {% if pages %}
             <ul class="list-goup">
                 {% for page in pages %}
                     <li class="list-group-item">
-                        <a href="{{ page.url }}">
+                        <a href="{% url 'rango:goto' page.id %}">
                             {{ page.title }}
                         </a>
+                        <div class="text-right">
+                        views: {{ page.views }}
+                        </div>
                     </li>
                 {% endfor %}
             </ul>
@@ -36,7 +68,7 @@
                 logged in
             </a>
         {% endif %}
-
+        </div>
     {% else %}
         <strong>This category does not exist</strong>
     {% endif %}

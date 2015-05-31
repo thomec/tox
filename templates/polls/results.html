@@ -11,7 +11,7 @@
     </div>
 
     <div class="row placeholders">
-        <div class="col-xs-12 col-sm-8 placeholder">
+        <div class="col-xs-12 col-sm-12 placeholder">
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -30,7 +30,7 @@
                                     </a>
                                     <p>Total votes: {{ question.count_votes }}</p>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-4">
                                     {% if question.answer_set.all %}
                                         <ul class="list-group">
                                             {% for answer in question.answer_set.all %}
@@ -43,6 +43,10 @@
                                     {% else %}
                                         <strong>No answers available</strong>
                                     {% endif %}
+                                </div>
+                                <div class="col-sm-4">
+                                    <script>
+                                    </script>
                                 </div>
                             </div>
                         </li>
