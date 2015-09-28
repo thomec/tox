@@ -10,7 +10,7 @@
     </div>
 
     <form id="form" class="form-inline"
-        method="POST" action="{% url 'polls:edit' poll.id %}">
+        method="POST" action="{% url 'polls:edit_poll_questions' poll.id %}">
         {% csrf_token %}
 
         {% if form.non_field_errors %}

@@ -5,29 +5,31 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 
-from polls.models import Poll, Question, Answer, Vote
+from polls.models import Poll, Choice, Vote
 from polls.forms import *
 
 
-def index(request):
-    polls = Poll.objects.order_by('-pub_date')[:5]
-    questions = Question.objects.all()[:5]
 
-    form = PollQuestionForm(request.POST or None)
+def index(request):
+
+    polls = Poll.objects.order_by('-pub_date')[:5]
+    form = PollForm(request.POST or None)
 
     if form.is_valid():
         poll = form.save(request)
         return HttpResponseRedirect(reverse(
-            'polls:edit_poll_questions',
+            'polls:edit',
             args=(poll.id,)
         ))
 
-    context = {'form': form, 'polls': polls, 'questions': questions}
+    context = {'form': form, 'polls': polls}
     return render(request, 'polls/index.html', context)
+
 
 
 def about(request):
     return render(request, 'polls/about.html', {})
+
 
 
 def polls(request):
@@ -38,22 +40,55 @@ def polls(request):
     return render(request, 'polls/polls.html', context)
 
 
-def questions(request):
-
-    questions = question.objects.all()
-    title = "Question list"
-    context = {'questions': questions, 'title': title}
-    return render(request, 'polls/questions.html', context)
-
 
 def poll(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
-    questions = poll.question_set.all()
-    title = "Poll detail"
-    context = {'poll': poll, 'questions': questions, 'title': title}
+    # questions = poll.question_set.all()
+    choices = poll.choice_set.all()
+    title = "Poll details"
+    context = {'poll': poll, 'choices': choices, 'title': title}
 
     return render(request, 'polls/poll.html', context)
+
+
+
+def edit(request, poll):
+
+    poll = get_object_or_404(Poll, id=poll)
+    choices = poll.choice_set.all()
+    
+    print("poll.title    = "+poll.title)
+    print("type(choices) = "+str(type(choices)))
+    print("choices       = "+str(choices))
+
+    form = PollForm(request.POST or None, instance=poll)
+    formset = ChoicesFormSet(request.POST or None, instance=poll)
+
+    context = {
+            'poll': poll,
+            'choices': choices,
+            'form': form,
+            'formset': formset
+            }
+
+    if form.is_valid() and formset.is_valid():
+        print("Form is valid")
+        poll = form.save()
+        choices = formset.save()
+
+        print("save poll:    "+str(poll))
+        print("save choices: "+str(choices))
+        return HttpResponseRedirect(
+                reverse('polls:poll',args=(poll.id,))
+                )
+
+    else:
+        print("Form has errors")
+        print(form.errors)
+    
+    return render(request, 'polls/edit.html', context)
+
 
 
 def question(request, question):
@@ -80,6 +115,7 @@ def question(request, question):
     return render(request, 'polls/question.html', context)
 
 
+
 def vote(request, question):
 
     question = get_object_or_404(Question, id=question)
@@ -104,6 +140,7 @@ def vote(request, question):
             )
 
 
+
 def results(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
@@ -111,6 +148,11 @@ def results(request, poll):
     context ={'poll': poll, 'questions': questions}
     
     return render(request, 'polls/results.html', context)
+
+
+
+
+
 
 
 def edit_poll_questions(request, poll):
@@ -140,6 +182,7 @@ def edit_poll_questions(request, poll):
         print(form.errors)
     
     return render(request, 'polls/edit_poll_questions.html', context)
+
 
 
 def edit_question_answers(request, question):

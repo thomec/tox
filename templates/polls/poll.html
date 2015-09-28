@@ -14,19 +14,19 @@
 
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3>Questions</h3>
+                    <h3>{{ poll.question }}</h3>
                 </div>
             </div>
 
-            {% if questions %}
+            {% if choices %}
                 <ul class="list-group">
-                    {% for question in questions %}
+                    {% for choice in choices %}
                         <li class="list-group-item">
-                            <a href="{% url 'polls:question' question.id %}">
-                                {{ question.text }}
+                            <a href="{% url 'polls:poll' poll.id %}">
+                                {{ choice.text }}
                             </a>
                             <a class="btn btn-default btn-sm"
-                                href="{% url 'polls:edit_question_answers' question.id %}">
+                                href="{% url 'polls:edit' poll.id %}">
                                 Edit
                             </a>
 
@@ -34,7 +34,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <strong>No questions available</strong>
+                <strong>No choices available</strong>
             {% endif %}
             
         </div>

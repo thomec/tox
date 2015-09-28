@@ -13,7 +13,7 @@ from django.forms.models import (
         )
 from django.forms.formsets import formset_factory
 
-from polls.models import Poll, Question, Answer
+from polls.models import Poll, Choice
 
 
 
@@ -21,14 +21,18 @@ class PollForm(forms.ModelForm):
    
     class Meta:
         model = Poll
-        fields = ['title', 'description']
+        fields = ['title', 'question', 'description']
+        widgets = {
+                'title': forms.TextInput(attrs={'class': 'form-control'}),
+                'question': forms.TextInput(attrs={'class': 'form-control'}),
+                'description': forms.TextInput(attrs={'class': 'form-control'})
+                }
 
-
-class QuestionForm(forms.ModelForm):
+class ChoiceForm(forms.ModelForm):
 
     class Meta:
-        model = Question
-        fields = ['text']
+        model = Choice
+        fields = ['poll', 'number', 'text']
 
 
 class PollQuestionForm(forms.Form):
@@ -54,19 +58,14 @@ class PollQuestionForm(forms.Form):
         return poll
 
 
-QuestionFormSet = inlineformset_factory(Poll, Question,
-        fields=['id','text'],
-        #exclude=[],
+ChoicesFormSet = inlineformset_factory(Poll, Choice,
+        fields=['poll', 'number', 'text'],
+        # exclude=[],
         widgets={
-                'id': forms.HiddenInput(),
-                'text': forms.TextInput(attrs={'class': 'form-control'})
-                }
+            'number': forms.TextInput(attrs={'class': 'form-control'}),
+            'text': forms.TextInput(attrs={'class': 'form-control'}),
+            }
         )
-AnswerFormSet = inlineformset_factory(Question, Answer,
-        fields=['text'],
-        widgets={
-                'question': forms.HiddenInput(),
-                'text': forms.TextInput(attrs={'class': 'form-control'})
-                }
-        )
+
+
 

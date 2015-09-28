@@ -6,47 +6,38 @@ from django.db import models
 
 class Poll(models.Model):
     title = models.CharField('title', max_length=255, help_text="Title")
-    description = models.CharField('description',
-        max_length=4095,
-        help_text="Description")
+    question = models.CharField(
+            'question',
+            max_length=255,
+            help_text="Question",)
+    description = models.CharField(
+            'description',
+            max_length=4095,
+            help_text="Description"
+            )
     pub_date = models.DateTimeField('date published', auto_now_add=True)
+    # exp_date = models.DateTimeField('expiery date')
 
     def __str__(self):
         return self.title
+
+    def count_choices(self):
+        return self.choice_set.all().count()
+
+    def count_votes(self):
+        return self.vote_set.all().count()
 
     class Meta:
         ordering = ['pub_date', 'title']
 
 
-class Question(models.Model):
+class Choice(models.Model):
     poll = models.ForeignKey(Poll)
     text = models.CharField(max_length=255)
     number = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
         return self.text
-
-    def count_answers(self):
-        return self.answer_set.count() # error?
-
-    def count_votes(self):
-        return self.vote_set.all().count()
-
-    class Meta:
-        ordering = ['number', 'text']
-
-
-class Answer(models.Model):
-    question = models.ForeignKey(Question)
-    text = models.CharField(max_length=255)
-    #value = models.IntegerField(default=0)
-    number = models.PositiveSmallIntegerField(default=0)
-
-    def __str__(self):
-        return self.text
-
-    def poll(self): # this should allow to read answer.poll
-        return self.question.poll
 
     def count_votes(self):
         return self.vote_set.all().count()
@@ -57,8 +48,7 @@ class Answer(models.Model):
 
 class Vote(models.Model):
     poll = models.ForeignKey(Poll)
-    questions = models.ManyToManyField(Question)
-    answers = models.ManyToManyField(Answer)
+    choice = models.ForeignKey(Choice)
     timestamp = models.DateTimeField(auto_now_add=True)
     sessionid = models.CharField(max_length=32)
 

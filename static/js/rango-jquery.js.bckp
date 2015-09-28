@@ -13,28 +13,19 @@ $(document).ready(function() {
 
     var myHeading = document.querySelector('h1');
     myHeading.innerHTML = 'Hello world!';
- 
+    
     var myImage = document.querySelector('img');
+    myImage.onclick = alert("ALERT");
 
     myImage.onclick = function() {
         var mySrc = myImage.getAttribute('src');
-        alert("You clicked the image with src attribute = '"+mySrc+"'");
-        console.log("Clicked Image");
-        console.log({{visits}})
-
-    }
-/*
-    myImage.onclick = function() {
-        var mySrc = myImage.getAttribute('src');
-        if(mySrc === '/static/images/rango_solo.jpg') {
-            alert("solo"+mySrc);
-            myImage.setAttribute ('src', "{% static 'images/rango_new.jpg' %}");
+        if(mySrc === '{% static "images/rango_solo.jpg" %}') {
+            myImage.setAttribute ('src', '{% static 'images/rango_new.jpg' %}');
         } else {
-            alert("new"+mySrc);
-            myImage.setAttribute ('src', "{% static 'images/rango_solo.jpg' %}");
+            myImage.setAttribute ('src', '{% static 'images/rango_solo.jpg' %}');
         }
     }
-
+    
     document.querySelector('img').onclick = function() {
         var mySrc = myImage.getAttribute('src');
         if(mySrc === "{% static 'images/rango_solo.jpg' %}") {
@@ -43,5 +34,5 @@ $(document).ready(function() {
             myImage.setAttribute ('src',"{% static 'images/rango_solo.jpg' %}");
         }
     }
-*/
+
 }); 

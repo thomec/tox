@@ -54,6 +54,7 @@ def index(request):
 
 def about(request):
     visits = request.session.get('visits') or 0
+    print(type(visits))
     context = {'visits': visits}
     return render(request, 'rango/about.html', context)
 

@@ -6,6 +6,17 @@
 
 {% block body %}
     <h1>About Rango</h1>
-    <img src="{% static 'images/rango_solo.jpg' %}" alt="Picture of Rango" />
-    you have visited rango {{ visits }} times.
+    <img src="{% static 'images/rango_new.jpg' %}" alt="Picture of Rango" />
+    <p>You have visited rango {{ visits }} times.</p>
+
+    <button class="btn" onClick="alert('You clicked the button using Javascript.');">
+        clickme
+    </button>
+
+    <button class="btn btn-default" id="about-btn"> Click Me - I'm Javascript on Speed</button>
+
+    <p>This is a example</p>
+
+    <p>This is another example</p>
+
 {% endblock %} 

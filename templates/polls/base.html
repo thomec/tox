@@ -48,14 +48,14 @@
                         <li><a href="{% url 'polls:index' %}">Home</a></li>
                         {% if poll %}
                             <li>
-                                <a href="{% url 'polls:edit_poll_questions' poll.id %}">
+                                <a href="{% url 'polls:edit' poll.id %}">
                                     Edit Poll
                                 </a>
                             </li>
                         {% endif %}
                         {% if question %}
                             <li>
-                                <a href="{% url 'polls:edit_question_answers' question.id %}">
+                                <a href="{% url 'polls:edit' question.id %}">
                                     Edit Question
                                 </a>
                             </li>

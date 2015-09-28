@@ -46,9 +46,9 @@
         </div>
 
     <div class="row placeholders">
-        <div class="col-xs-12 col-sm-6 placeholder">
+        <div class="col-xs-12 col-sm-12 placeholder">
             <a href="{% url 'polls:polls' %}" class="btn btn-primary btn-block" role="button">
-                <h3>Polls</h3>
+                <h3>Popular Polls</h3>
             </a>
 
             {% if polls %}
@@ -57,6 +57,7 @@
                         <li class="list-group-item">
                             <a href="{% url 'polls:poll' poll=poll.id %}">
                                 {{ poll.title }}
+                                 ({{ poll.pub_date }}) - {{ poll.question }}
                             </a>
                         </li>
                     {% endfor %}
@@ -66,30 +67,5 @@
             {% endif %}
         </div>
 
-        <div class="col-xs-12 col-sm-6 placeholder">
-            {% comment 'panel without button' %}
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3>Questions</h3>
-                </div>
-            </div>
-            {% endcomment %}
-            <a href="{% url 'polls:questions' %}" class="btn btn-primary btn-block" role="button">
-                <h3>Questions</h3>
-            </a>
-
-            {% if questions %}
-                <ul class="list-group">
-                    {% for question in questions %}
-                        <li class="list-group-item text-left">
-                            <a href="{% url 'polls:question' question=question.id %}">
-                                {{ question.text }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>No questions available</strong>
-            {% endif %}
-        </div>
+    </div>
 {% endblock %}
