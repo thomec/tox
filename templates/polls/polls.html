@@ -22,14 +22,10 @@
                     <a href="{% url 'polls:poll' poll.id %}">
                         {{ poll.title }}
                     </a>
-                    <a class="btn btn-default btn-sm" href="{% url 'polls:edit_poll_questions' poll.id %}" role="button">
-                        Edit
-                    </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>No polls present</strong>
-            {% endif %}
-
-       {% endblock %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No polls present</strong>
+    {% endif %}
+{% endblock %}

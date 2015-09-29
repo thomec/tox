@@ -19,20 +19,20 @@
             </div>
 
             {% if choices %}
-                <ul class="list-group">
-                    {% for choice in choices %}
-                        <li class="list-group-item">
-                            <a href="{% url 'polls:poll' poll.id %}">
-                                {{ choice.text }}
-                            </a>
-                            <a class="btn btn-default btn-sm"
-                                href="{% url 'polls:edit' poll.id %}">
-                                Edit
-                            </a>
-
-                        </li>
-                    {% endfor %}
-                </ul>
+                <form action="{% url 'polls:vote' poll.id %}" method="post">
+                    {% csrf_token %}
+                    <ul class="list-group">
+                        {% for choice in choices %}
+                            <li class="list-group-item">
+                                <button class="btn btn-primary btn-block"
+                                        type="submit" value="{{ choice.id }}"
+                                        name="choice" id="answer{{forloop.counter}}">
+                                    {{ choice.number }}. {{ choice.text }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </form>
             {% else %}
                 <strong>No choices available</strong>
             {% endif %}

@@ -91,48 +91,23 @@ def edit(request, poll):
 
 
 
-def question(request, question):
-    
-    question = get_object_or_404(Question, id=question)
-    poll = question.poll
-    answers = question.answer_set.all()
-    title = 'Question detail'
-    context = {
-            'poll':poll,
-            'question': question,
-            'answers': answers,
-            'title': title
-    }
+def vote(request, poll):
 
-    sessionid = request.session.session_key
-    votes = Vote.objects.filter(sessionid=sessionid, questions=question)
-    
-    if votes:
-        context['message'] = "already voted {} times!".format(str(len(votes)))
-    else:
-        context['message'] = "not voted yet"
-
-    return render(request, 'polls/question.html', context)
-
-
-
-def vote(request, question):
-
-    question = get_object_or_404(Question, id=question)
-    poll = question.poll
-    context = {'poll': poll, 'question': question}
+    poll = get_object_or_404(Poll, id=poll)
+    context = {'poll': poll}
     
     try:
-        choice = question.answer_set.get(pk=request.POST['choice'])
+        selection = poll.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         context['error_message'] = "You didn't select a choice" # kann weg?
-        return render(request, 'polls/question.html', context)
+        return render(request, 'polls/poll.html', context)
     else:
-        print("\nchoice:\n"+str(choice))
-        vote = Vote.objects.create(poll=poll)
-        vote.questions.add(question)
-        vote.answers.add(choice)
-        vote.sessionid = request.session.session_key
+        print("\nselection:\n"+str(selection))
+        vote = Vote.objects.create(
+                poll=poll,
+                choice=selection,
+                sessionid=request.session.session_key
+                )
         vote.save()
        
     return HttpResponseRedirect(
@@ -144,70 +119,10 @@ def vote(request, question):
 def results(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
-    questions = poll.question_set.all()
-    context ={'poll': poll, 'questions': questions}
+    choices = poll.choice_set.all()
+    context ={'poll': poll, 'choices': choices}
     
     return render(request, 'polls/results.html', context)
 
-
-
-
-
-
-
-def edit_poll_questions(request, poll):
-
-    poll = get_object_or_404(Poll, id=poll)
-    questions = poll.question_set.all()
-
-    form = PollForm(request.POST or None, instance=poll)
-    formset = QuestionFormSet(request.POST or None, instance=poll)
-
-    context = {
-            'poll': poll,
-            'questions': questions,
-            'form': form,
-            'formset': formset
-    }
-
-    if form.is_valid() and formset.is_valid():
-        form.save()
-        formset.save()
-        return HttpResponseRedirect(
-                reverse('polls:poll',args=(poll.id,))
-                )
-
-
-    else:
-        print(form.errors)
-    
-    return render(request, 'polls/edit_poll_questions.html', context)
-
-
-
-def edit_question_answers(request, question):
-
-    question = get_object_or_404(Question, id=question)
-    answers = question.answer_set.all()
-
-    form = QuestionForm(request.POST or None, instance=question)
-    formset = AnswerFormSet(request.POST or None, instance=question)
-
-    context = {
-            'question': question,
-            'answer': answers,
-            'form': form,
-            'formset': formset
-    }
-
-    if form.is_valid() and formset.is_valid():
-        form.save()
-        formset.save()
-        return HttpResponseRedirect(reverse('polls:index'))
-
-    else:
-        print(form.errors)
-    
-    return render(request, 'polls/edit_question_answers.html', context)
 
 
