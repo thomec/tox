@@ -13,9 +13,9 @@
         <div class="col-xs-12 col-sm-12 placeholder">
 
             <div class="panel panel-primary">
-                <div class="panel-heading">
+                <a href="{% url 'polls:poll' poll=poll.id %}" class="btn btn-primary btn-block"> 
                     <h3>{{ poll.question }}</h3>
-                </div>
+                </a>
             </div>
 
             {% if choices %}
