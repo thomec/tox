@@ -95,6 +95,14 @@ def vote(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
     context = {'poll': poll}
+
+    if not request.session.session_key:
+        request.session.modified = True
+        request.session.save()
+    
+    print("HURGA")
+    print("\nrequest.session.__dict__\n"+str(request.session.__dict__))
+    print("\nrequest.session.session_key\n"+str(request.session.session_key))
     
     try:
         selection = poll.choice_set.get(pk=request.POST['choice'])
