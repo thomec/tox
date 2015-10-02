@@ -12,6 +12,7 @@
     "grunt-contrib-imagemin": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "matchdep": "*"
+    "matchdep": "*",
+    "npm": "^3.3.5"
   }
 }

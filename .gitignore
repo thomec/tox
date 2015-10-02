@@ -61,3 +61,7 @@ target/
 
 # secrets
 keys.py
+
+# javascript stuff
+node_modules/
+
