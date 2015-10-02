@@ -18,6 +18,10 @@
                 </div>
             </div>
 
+            {% if voted %}
+                <strong>You have already voted on this</strong>
+            {% endif %}
+
             {% if choices %}
                 <form action="{% url 'polls:vote' poll.id %}" method="post">
                     {% csrf_token %}
@@ -36,6 +40,16 @@
             {% else %}
                 <strong>No choices available</strong>
             {% endif %}
+            
+            {% if voted %}
+                <ul class="list-group">
+                    {% for vote in voted %}
+                        <li class="list-group-item"> on {{ vote.timestamp }}
+                            voted for {{ vote.choice.text }}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
             
         </div>
     </div>
