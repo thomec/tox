@@ -86,30 +86,12 @@ def edit(request, poll):
 def vote(request, poll):
 
     poll = get_object_or_404(Poll, id=poll)
-    #context = {'poll': poll}
-
 
     if not request.session.session_key:
         request.session.modified = True
         request.session.save()
     
-    print("HURGA")
-    print("\nrequest.session.__dict__\n"+str(request.session.__dict__))
-    print("\nrequest.session.session_key\n"+str(request.session.session_key))
-
     voted = Vote.objects.filter(sessionid=request.session.session_key, poll=poll)
-
-    print("sessionid\n"+str(request.session.session_key))
-    
-    if voted:
-        print("voted\n"+str(voted))
-
-    for vote in voted:
-        print("vote.poll.title\n"+str(vote.poll.title))
-        print("vote.choice.text\n"+str(vote.choice.text))
-   
-
-
     context = {'poll': poll, 'voted': voted}
     
     try:
@@ -118,7 +100,6 @@ def vote(request, poll):
         context['error_message'] = "You didn't select a choice" # kann weg?
         return render(request, 'polls/poll.html', context)
     else:
-        print("\nselection:\n"+str(selection))
         vote = Vote.objects.create(
                 poll=poll,
                 choice=selection,
