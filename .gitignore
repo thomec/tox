@@ -64,4 +64,6 @@ keys.py
 
 # javascript stuff
 node_modules/
+bower_components/
+
 

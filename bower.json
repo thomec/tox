@@ -2,14 +2,11 @@
   "name": "tox",
   "version": "0.0.0",
   "homepage": "https://github.com/thomec/tox",
-  "description": "tiger opossum crossing",
+  "description": "tiger opossum something",
   "main": "",
   "moduleType": [
-    "amd",
-    "es6",
     "globals",
-    "node",
-    "yui"
+    "node"
   ],
   "authors": [
     "thomec@gmail.com"
@@ -22,5 +19,14 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "*",
+    "bootstrap": "*",
+    "chartist": "*",
+    "fontawesome": "*",
+    "bootstrap-datepicker": "*",
+    "qrcodejs": "*",
+    "skrollr": "*"
+  }
 }
