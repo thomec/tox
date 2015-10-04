@@ -13,7 +13,10 @@ urlpatterns = patterns('',
             views.add_page,
             name='add_page'),
         url(r'^add_category/$', views.add_category, name='add_category'),
+        url(r'^add_profile/$', views.add_profile, name='add_profile'),
+        url(r'^profile/$', views.profile, name='profile'),
         url(r'^search/$', views.search, name='search'),
         url(r'^goto/(?P<page>\d+)/$', views.track, name='goto'),
 )
+
 

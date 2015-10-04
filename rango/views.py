@@ -59,6 +59,7 @@ def about(request):
     return render(request, 'rango/about.html', context)
 
 
+
 def category(request, slug):
 
     category = get_object_or_404(Category, slug=slug)    
@@ -72,6 +73,7 @@ def category(request, slug):
             results = run_query(query)
             context['results'] = results
     return render(request, 'rango/category.html', context)
+
 
 
 @login_required
@@ -88,6 +90,7 @@ def add_category(request):
         print(form.errors)
 
     return render(request, 'rango/add_category.html', context)
+
 
 
 @login_required
@@ -112,6 +115,7 @@ def add_page(request, slug):
     return render(request, 'rango/add_page.html', context)
 
 
+
 def search(request):
 
     results = []
@@ -125,6 +129,8 @@ def search(request):
 
     return render(request, 'rango/search.html', {'results': results})
 
+
+
 def track(request, page):
 
     page = get_object_or_404(Page, id=page)
@@ -132,4 +138,15 @@ def track(request, page):
     page.save()
 
     return redirect(page.url)
+
+
+
+def add_profile(request, ):
+    return render(request, 'rango/add_profile.html')
+
+
+
+
+def profile(request, ):
+    return render(request, 'rango/profile.html')
 

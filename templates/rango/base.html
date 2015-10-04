@@ -19,6 +19,7 @@
         
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
 
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
         <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css'%}"/>
@@ -52,7 +53,9 @@
                         {% endif %}
                     </a>
                     {% if user.is_authenticated %}
-                    Hello {{ user.username }}
+                        Hello
+                        <a href="{% url 'rango:profile' %}">
+                            {{ user.username }}</a>
                     {% endif %}
                 </div>
 

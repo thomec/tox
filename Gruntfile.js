@@ -16,7 +16,7 @@ module.exports = function(grunt) {
           'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js'
 
         ],
-        dest: 'polls/static/js/main.js',
+        dest: 'static/js/main.js',
       }
     },
 
