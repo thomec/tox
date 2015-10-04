@@ -4,6 +4,11 @@ $(document).ready(function() {
         alert("You clicked the button using JQuery!");
     });
 
+    $("#test").click( function(event) {
+        alert("You clicked the button using JQuery!");
+    });
+
+
     $("p").hover(function() {
             $(this).css('color', 'red');
     },

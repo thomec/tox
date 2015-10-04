@@ -81,7 +81,7 @@ module.exports = function(grunt) {
         livereload: true,
       },
       scripts: {
-        files: ['static/css/*.css', 'templates/polls/*.html'],
+        files: ['static/js/*.js', 'static/css/*.css', 'templates/polls/*.html'],
         tasks: [],
         options: {
           spawn: false,

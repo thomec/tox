@@ -63,7 +63,7 @@ def about(request):
 def category(request, slug):
 
     category = get_object_or_404(Category, slug=slug)    
-    pages = Page.objects.filter(category=category)
+    pages = Page.objects.filter(category=category).order_by('-views')
     results = []
     context = {'category': category, 'pages': pages}
 

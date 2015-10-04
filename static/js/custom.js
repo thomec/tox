@@ -1,9 +1,17 @@
 $(document).ready(function(){
-'use strict';
-  /*------------------Tooltip-------------------*/
+  'use strict';
+
+  /*------------------rango--------------------------------------------------*/
+
+  $(".btn-default").click( function(event) {
+      alert("You clicked the button using JQuery!");
+    });
+
+
+  /*------------------Tooltip------------------------------------------------*/
   $('[rel=tooltip]').tooltip();
 
-  /*------------------Smoothscroll-------------------*/
+  /*------------------Smoothscroll-------------------------------------------*/
   $('a.smoothscroll').on('click', function(e) {
     e.preventDefault();
 
@@ -17,12 +25,12 @@ $(document).ready(function(){
     });
   });
 
-  /*------------------Date Picker-------------------*/
+  /*------------------Date Picker--------------------------------------------*/
   $('#id_pub_date, #id_exp_date').datepicker({
     weekStart : 1
   });
 
-  /*------------------Skrollr-------------------*/
+  /*------------------Skrollr------------------------------------------------*/
   var s = skrollr.init({forceHeight: false});
   if (s.isMobile()) {
     s.destroy();
@@ -70,22 +78,17 @@ $(document).ready(function(){
 
 
 
+  //QR Code
+  var url = document.URL;
+  if(document.getElementById("qrcode")){
+    new QRCode(document.getElementById("qrcode"), url);
+  }
 
 
 
-//QR Code
-var url = document.URL;
-if(document.getElementById("qrcode")){
-  new QRCode(document.getElementById("qrcode"), url);
-}
-
-
-
-
-//Select all Text
-
-    function select_all(el) {
-        if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
+  //Select all Text
+  function select_all(el) {
+    if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {
             var range = document.createRange();
             range.selectNodeContents(el);
             var sel = window.getSelection();
@@ -98,7 +101,7 @@ if(document.getElementById("qrcode")){
         }
     }
 
-$(".permalink span").text(url).click(function(){
+  $(".permalink span").text(url).click(function(){
   select_all(this);
 });
 
