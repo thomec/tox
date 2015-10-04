@@ -23,8 +23,8 @@ module.exports = function(grunt) {
 //minify javascript
     uglify: {
       build: {
-        src: 'polls/static/js/main.js',
-        dest: 'polls/static/js/main.min.js'
+        src: 'static/js/main.js',
+        dest: 'static/js/main.min.js'
       }
     },
 
