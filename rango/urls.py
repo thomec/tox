@@ -17,6 +17,7 @@ urlpatterns = patterns('',
         url(r'^profile/$', views.profile, name='profile'),
         url(r'^search/$', views.search, name='search'),
         url(r'^goto/(?P<page>\d+)/$', views.track, name='goto'),
+        url(r'^like_category/$', views.like_category, name='like_category'),
 )
 
 

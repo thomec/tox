@@ -17,9 +17,18 @@ $(document).ready(function() {
     });
 
     var myHeading = document.querySelector('h1');
-    myHeading.innerHTML = 'Hello world!';
+    //myHeading.innerHTML = 'Hello world!';
  
     var myImage = document.querySelector('img');
+
+    $('#likes').click(function(){
+    var catid;
+    catid = $(this).attr("data-catid");
+    $.get('/rango/like_category/', {category_id: catid}, function(data){
+               $('#like_count').html(data);
+               $('#likes').hide();
+    });
+});
     
 /*
 
