@@ -4,10 +4,7 @@
   "homepage": "https://github.com/thomec/tox",
   "description": "tiger opossum something",
   "main": "",
-  "moduleType": [
-    "globals",
-    "node"
-  ],
+  "moduleType": [],
   "authors": [
     "thomec@gmail.com"
   ],
@@ -21,12 +18,12 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "*",
-    "bootstrap": "*",
-    "chartist": "*",
-    "fontawesome": "*",
-    "bootstrap-datepicker": "*",
-    "qrcodejs": "*",
-    "skrollr": "*"
+    "jquery": "2.1.4",
+    "bootstrap": "3.3.5",
+    "font-awesome": "fontawesome#4.4.0",
+    "bootstrap-datepicker": "1.4.1",
+    "qrcodejs": "0.1.0",
+    "chartist": "0.9.4",
+    "skrollr": "0.6.30"
   }
 }

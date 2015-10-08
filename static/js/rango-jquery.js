@@ -1,11 +1,11 @@
 $(document).ready(function() {
     
-    $(".btn-default").click( function(event) {
+    $("#about-btn").click( function(event) {
         alert("You clicked the button using JQuery!");
     });
 
     $("#test").click( function(event) {
-        alert("You clicked the button using JQuery!");
+        alert("You clicked the button testing JQuery!");
     });
 
 
@@ -20,6 +20,8 @@ $(document).ready(function() {
     myHeading.innerHTML = 'Hello world!';
  
     var myImage = document.querySelector('img');
+    
+/*
 
     myImage.onclick = function() {
         var mySrc = myImage.getAttribute('src');
@@ -28,7 +30,7 @@ $(document).ready(function() {
         console.log({{visits}})
 
     }
-/*
+
     myImage.onclick = function() {
         var mySrc = myImage.getAttribute('src');
         if(mySrc === '/static/images/rango_solo.jpg') {

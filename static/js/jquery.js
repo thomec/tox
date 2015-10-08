@@ -1,1 +1,0 @@
-/home/thomec/devel/tox/static/js/jquery.min.js
