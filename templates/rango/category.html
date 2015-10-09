@@ -60,7 +60,7 @@
         <hr />
         {% if user.is_authenticated %}
             <a class="btn btn-primary" role="button" href="{% url 'rango:add_page' category.slug %}">
-              <span class="fa fa-plus-square-o"></span>
+              <i class="fa fa-plus-square-o"></i>
               Add page
             </a>
             <button id="likes" data-catid="{{category.id}}" class="btn btn-primary" type="button">

@@ -119,17 +119,21 @@ def add_page(request, slug):
 @login_required
 def like_category(request):
     
-    cat_id = None
-    if request.method == 'GET':
-        cat_id = request.GET['category_id']
+    cat_id = request.GET['category_id'] or None
+    #if request.method == 'GET':
+    #   cat_id = request.GET['category_id']
+    #   print("GET REQUEST")
 
     likes = 0
     if cat_id:
         cat = Category.objects.get(id=int(cat_id))
+        print("CAT_ID"+cat.name)
+
         if cat:
+            print("CAT_LIKES="+cat.likes)
             likes = cat.likes + 1
             cat.likes =  likes
-            cat.save()
+            cat.save() #
 
     return HttpResponse(likes)
 

@@ -33,8 +33,8 @@ module.exports = function(grunt) {
       files: {
         'static/css/main.min.css': [
           'bower_components/bootstrap/dist/css/bootstrap.css',
-          'bower_components/bootstrap-datepicker/css/datepicker3.css',
-          'bower_components/fontawesome/css/font-awesome.css',
+          'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
+          'bower_components/font-awesome/css/font-awesome.css',
           'bower_components/chartist/dist/chartist.min.css'
           ]
         }
