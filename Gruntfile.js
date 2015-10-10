@@ -10,10 +10,10 @@ module.exports = function(grunt) {
       src: [
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js'
         'bower_components/skrollr/dist/skrollr.min.js',
         'bower_components/qrcodejs/qrcode.min.js',
         'bower_components/chartist/dist/chartist.min.js',
-        'bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js'
         ],
       dest: 'static/js/main.js',
       }
@@ -31,8 +31,9 @@ module.exports = function(grunt) {
   cssmin: {
     combine: {
       files: {
-        'static/css/main.min.css': [
+        'static/css/main.css': [
           'bower_components/bootstrap/dist/css/bootstrap.css',
+          'bower_components/bootstrap/dist/css/bootstrap-theme.css',
           'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
           'bower_components/font-awesome/css/font-awesome.css',
           'bower_components/chartist/dist/chartist.min.css'
@@ -40,7 +41,7 @@ module.exports = function(grunt) {
         }
       },
     minify: {
-      src: 'static/css/main.min.css',
+      src: 'static/css/main.css',
       dest: 'static/css/main.min.css'
       }
     },

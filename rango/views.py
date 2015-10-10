@@ -6,7 +6,7 @@ from datetime import datetime
 from django.shortcuts import (
         render, get_object_or_404, get_list_or_404, redirect
 )
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
@@ -17,6 +17,9 @@ from rango.bing_search import run_query
 
 
 def index(request):
+    """
+    index view
+    """
     # populate the context dict with categories and pages
     context = {}
     context['categories'] = Category.objects.order_by('-likes')
@@ -119,23 +122,63 @@ def add_page(request, slug):
 @login_required
 def like_category(request):
     
-    cat_id = request.GET['category_id'] or None
-    #if request.method == 'GET':
-    #   cat_id = request.GET['category_id']
-    #   print("GET REQUEST")
-
+    catid = request.GET['catid'] or None
     likes = 0
-    if cat_id:
-        cat = Category.objects.get(id=int(cat_id))
-        print("CAT_ID"+cat.name)
 
-        if cat:
-            print("CAT_LIKES="+cat.likes)
-            likes = cat.likes + 1
-            cat.likes =  likes
-            cat.save() #
+    if catid:
+        cat = Category.objects.get(id=int(catid))
+
+    if cat:
+        likes = cat.likes + 1
+        cat.likes =  likes
+        cat.save() #
 
     return HttpResponse(likes)
+
+
+
+@login_required
+def auto_add_page(request):
+
+    catid = request.method.GET['catid'] or None
+    url =request.method.GET['url'] or None
+    title =request.method.GET['title'] or None
+    context = {}
+
+    if catid:
+        category = Category.objects.get(id=int(catid))
+        page = Page.objects.get_or_create(
+                    category=category, title=title, url=url)
+        pages = Page.objects.filter(category=category).order_by('-views')
+
+
+
+
+
+def get_category_list(max_results=0, starts_with=''):
+    
+    cat_list = []
+
+    if starts_with:
+        cat_list = Category.objects.filter(name__istartswith=starts_with)
+
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+
+    return cat_list
+
+
+
+def suggest_category(request):
+
+    cats = []
+    starts_with = request.GET['suggestion'] or ''
+    cats = get_category_list(8, starts_with)
+    context = {'cats': cats}
+
+    return render(request, 'rango/cats.html', context)
+
 
 
 
@@ -172,4 +215,8 @@ def add_profile(request, ):
 
 def profile(request, ):
     return render(request, 'rango/profile.html')
+
+
+
+
 
