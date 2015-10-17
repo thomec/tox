@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <title>Pepe - {% block title %}Poll System{% endblock %}</title>
+</head>
+
+<body id="top">
+    {% include 'polls/nav.html' %}
+    <div id="content">
+
+        {% block content %}{% endblock %}
+        <div class="container">
+          <br>
+        {% comment %}
+        <div class="alert alert-info">Debug message: {{ message }}</div>
+        {% endcomment %}
+      </div>
+    </div>
+{% include 'polls/footer.html' %}
+
+<script src="{% static 'js/main.min.js' %}"></script>
+
+<script src="{% static 'js/custom.js' %}"></script>
+
+
+
+</body>
+</html>

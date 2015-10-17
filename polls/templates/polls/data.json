@@ -1,0 +1,11 @@
+{
+    "results":[
+      {% for choice in question.choice_set.all %}      
+      {
+            "result":"{{ choice.votes }}"
+
+        },
+        {% endfor %}
+
+    ]
+}

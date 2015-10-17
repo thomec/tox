@@ -1,0 +1,60 @@
+{% extends 'polls/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Question{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>{{ poll }}</h1>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>{{ question }}</h2>
+      <p>{{ question.description }}</p>
+
+      {% if error_message %}
+      <p><strong>{{ error_message }}</strong></p>
+      {% endif %}
+
+      {% if answers %}
+      <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+          
+        {% for answer in answers %}
+        <button class="btn btn-custom btn-lg" type="submit" name="answer"
+            id="answer{{ forloop.counter }}" value="{{ answer.id }}">
+          {{ answer.text }}
+        </button>
+        {% endfor %}
+        
+      </form>
+      {% else %}
+      <strong>
+        There are no answers yet.
+        <a href="{% url 'polls:add_answer' question.id %}">Add one!</a>
+      </strong>
+      {% endif %}
+        
+      <br>
+      <p>Zurück zur Umfrage <a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></p>
+    </div>
+
+    <div class="col-sm-4">
+      <div id="qrcode"></div>
+      <hr>
+      <div class="permalink">
+        <i class="fa fa-link"></i>  <span></span>
+      </div>
+      <hr>
+      <div class="social">
+        <h5>Share on social networks</h5>
+        <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+        <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
+        <a href="#"><i class="fa fa-google-plus-square fa-2x"></i></a>
+      </div>
+    </div>
+  </div>
+</div><!--container-->
+{% endblock %}

@@ -1,0 +1,255 @@
+@darkblue: #0C2943;
+@lightblue: #225DA6;
+@red: #E60037;
+@black: #222222;
+
+/*-----Chart Colors based on Google Material Design*/
+@chartcolor-a: #f44336;
+@chartcolor-b: #2196f3;
+@chartcolor-c: #cddc39;
+@chartcolor-d: #ffc107;
+@chartcolor-e: #9c27b0;
+@chartcolor-f: #673ab7;
+@chartcolor-g: #ff5722;
+@chartcolor-h: #ffeb3b;
+@chartcolor-i: #e91e63;
+@chartcolor-j: #3f51b5;
+@chartcolor-k: #4caf50;
+@chartcolor-l: #607d8b;
+@chartcolor-m: #03a9f4;
+@chartcolor-n: #9e9e9e;
+@chartcolor-o: #ff9800;
+@chartcolor-p: #795548;
+@chartcolor-q: #8bc34a;
+@chartcolor-r: #009688;
+@chartcolor-s: #00bcd4;
+
+/*-------------------General---------------------*/
+
+body{
+    padding-top: 50px;
+}
+
+a{
+  color: @red;
+}
+
+.btn-custom{
+  background-color: @lightblue;
+  color: white!important;
+}
+.btn-custom:hover{
+  background-color: lighten(@lightblue, 20%);
+  color:white;
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-weight: normal;
+  color: @darkblue;
+}
+
+.btn, .alert, .list-group-item{
+  border-radius: 0px!important;
+}
+
+.form-control:focus {
+  border-color: @lightblue;
+  outline: 0px none;
+  box-shadow: none;
+}
+
+.has-error .form-control:focus {
+  box-shadow: none;
+}
+
+.form-control{
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
+
+/*-------------------Structure---------------------*/
+#content{
+  min-height: 800px;
+}
+
+/*-------------------Navbar---------------------*/
+.navbar-inverse {
+  background-color: @darkblue;
+  border-color: #080808;
+
+}
+
+.navbar-brand{
+  background-image: url(../img/pepe.png);
+  background-repeat: no-repeat;
+  text-indent: -10000px;
+  height: 50px;
+  width: 100px;
+  display: block;
+}
+
+/*-------------------Home---------------------*/
+.indexheader{
+  background-image:url(../img/placeholder.jpg);
+  height: 400px;
+
+  padding: 50px 0px;
+}
+
+.indexheader h1, .indexheader h3{
+  color: white;
+}
+
+.indexheader a{
+  color:@darkblue;
+}
+
+
+/*-------------------About Page---------------------*/
+.section{
+  padding: 50px 0px;
+}
+
+.about{
+  background-color: @chartcolor-a;
+  color: white;
+}
+
+.about h1{
+  color: white;
+}
+
+.team{
+
+}
+
+.faq{
+  background-color: @chartcolor-c;
+}
+
+.contact{
+
+}
+/*------------------Footer---------------------*/
+#pagefooter{
+  background-color:@black;
+  color: white;
+  min-height: 50px;
+  padding-top: 20px;
+}
+
+#pagefooter a{
+  color: white;
+  text-decoration: none;
+}
+
+
+/*------------------Panel---------------------*/
+.panel-heading, .panel-group .panel {
+  border-radius: 0px!important;
+}
+
+/*------------------Chartist---------------------*/
+
+.ct-chart .ct-label, .ct-chart .ct-label.ct-horizontal {
+  fill: rgba(255, 255, 255, 1);
+  font-size: 1.0em;
+}
+
+
+.a, .ct-chart .ct-series.ct-series-a .ct-area, .ct-chart .ct-series.ct-series-a .ct-slice:not(.ct-donut){
+  fill: @chartcolor-a;
+  background-color: @chartcolor-a;
+}
+
+.b, .ct-chart .ct-series.ct-series-b .ct-area, .ct-chart .ct-series.ct-series-b .ct-slice:not(.ct-donut){
+  fill: @chartcolor-b;
+  background-color: @chartcolor-b;
+}
+
+.c, .ct-chart .ct-series.ct-series-c .ct-area, .ct-chart .ct-series.ct-series-c .ct-slice:not(.ct-donut){
+  fill: @chartcolor-c;
+  background-color: @chartcolor-c;
+}
+
+.d, .ct-chart .ct-series.ct-series-d .ct-area, .ct-chart .ct-series.ct-series-d .ct-slice:not(.ct-donut){
+  fill: @chartcolor-d;
+  background-color: @chartcolor-d;
+}
+
+.e, .ct-chart .ct-series.ct-series-e .ct-area, .ct-chart .ct-series.ct-series-e .ct-slice:not(.ct-donut){
+  fill: @chartcolor-e;
+  background-color: @chartcolor-e;
+}
+
+.f, .ct-chart .ct-series.ct-series-f .ct-area, .ct-chart .ct-series.ct-series-f .ct-slice:not(.ct-donut){
+  fill: @chartcolor-f;
+  background-color: @chartcolor-f;
+}
+
+.g, .ct-chart .ct-series.ct-series-g .ct-area, .ct-chart .ct-series.ct-series-g .ct-slice:not(.ct-donut){
+  fill: @chartcolor-g;
+  background-color: @chartcolor-g;
+}
+
+.h, .ct-chart .ct-series.ct-series-h .ct-area, .ct-chart .ct-series.ct-series-h .ct-slice:not(.ct-donut){
+  fill: @chartcolor-h;
+  background-color: @chartcolor-h;
+}
+
+.i, .ct-chart .ct-series.ct-series-i .ct-area, .ct-chart .ct-series.ct-series-i .ct-slice:not(.ct-donut){
+  fill: @chartcolor-i;
+  background-color: @chartcolor-i;
+}
+
+.j, .ct-chart .ct-series.ct-series-j .ct-area, .ct-chart .ct-series.ct-series-j .ct-slice:not(.ct-donut){
+  fill: @chartcolor-j;
+  background-color: @chartcolor-j;
+}
+
+.k, .ct-chart .ct-series.ct-series-k .ct-area, .ct-chart .ct-series.ct-series-k .ct-slice:not(.ct-donut){
+  fill: @chartcolor-k;
+  background-color: @chartcolor-k;
+}
+
+.l, .ct-chart .ct-series.ct-series-l .ct-area, .ct-chart .ct-series.ct-series-l .ct-slice:not(.ct-donut){
+  fill: @chartcolor-l;
+  background-color: @chartcolor-l;
+}
+
+.m, .ct-chart .ct-series.ct-series-m .ct-area, .ct-chart .ct-series.ct-series-m .ct-slice:not(.ct-donut){
+  fill: @chartcolor-m;
+  background-color: @chartcolor-m;
+}
+
+.n, .ct-chart .ct-series.ct-series-n .ct-area, .ct-chart .ct-series.ct-series-n .ct-slice:not(.ct-donut){
+  fill: @chartcolor-n;
+  background-color: @chartcolor-n;
+}
+
+.o, .ct-chart .ct-series.ct-series-o .ct-area, .ct-chart .ct-series.ct-series-o .ct-slice:not(.ct-donut){
+  fill: @chartcolor-o;
+  background-color: @chartcolor-o;
+}
+
+.p, .ct-chart .ct-series.ct-series-p .ct-area, .ct-chart .ct-series.ct-series-p .ct-slice:not(.ct-donut){
+  fill: @chartcolor-p;
+  background-color: @chartcolor-p;
+}
+
+
+.q, .ct-chart .ct-series.ct-series-q .ct-area, .ct-chart .ct-series.ct-series-q .ct-slice:not(.ct-donut){
+  fill: @chartcolor-q;
+  background-color: @chartcolor-q;
+}
+
+.r, .ct-chart .ct-series.ct-series-r .ct-area, .ct-chart .ct-series.ct-series-r .ct-slice:not(.ct-donut){
+  fill: @chartcolor-r;
+  background-color: @chartcolor-r;
+}
+
+.s, .ct-chart .ct-series.ct-series-s .ct-area, .ct-chart .ct-series.ct-series-s .ct-slice:not(.ct-donut){
+  fill: @chartcolor-s;
+  background-color: @chartcolor-s;
+}

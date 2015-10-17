@@ -1,0 +1,29 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Add Answer{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Add an Answer</h1>
+
+  <form id="answer_form" method="post" action="{% url 'polls:add_answer' question.id %}">
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      {{ field.help_text }}
+      {{ field }}
+      <p class="text-danger">{{ field.errors|striptags }}</p>
+      <hr>
+    {% endfor %}
+
+    <button class="btn btn-custom" type="submit" name="submit"  value="Create new Answer">
+      Create</button>
+  </form>
+
+</div><!--container-->
+{% endblock %}

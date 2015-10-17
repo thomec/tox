@@ -1,0 +1,43 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+{% block title %}New Poll{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    <i class="fa fa-pencil"></i>&nbsp;Create a new Poll
+  </h1>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <form id="new_poll_form" method="post" action="{% url 'polls:new_poll' %}">
+        {% csrf_token %}
+        
+        {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+          
+          {% if field.errors %}
+          <span class="text-danger error-message small">&nbsp;
+            <i class="fa fa-exclamation-triangle"></i>
+            &nbsp;{{ field.errors|striptags }}
+          </span>
+          {% endif %}
+
+          {{ field }}
+        </div>
+        {% endfor %}
+
+        <button class="btn btn-custom" type="submit" name="submit"
+            value="Create new Answer">
+          <i class="fa fa-pencil"></i>&nbsp;Create
+        </button>
+      </form>
+    </div>
+  </div>
+</div><!--container-->
+{% endblock %}
