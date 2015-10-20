@@ -47,6 +47,7 @@ INSTALLED_APPS = (
         'registration', # django-registration-redux
         'rango',
         'polls',
+        'crispy-forms',
         'pollit',
         'pollngo',
         )
@@ -147,6 +148,9 @@ REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged
 LOGIN_REDIRECT_URL = '/rango/'  # The page you want users to arrive at after they successful log in
 LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
                                 # and are trying to access pages requiring authentication
+
+# Crispy-Forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 
 # additional information
