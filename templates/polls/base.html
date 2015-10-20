@@ -1,87 +1,33 @@
 <!DOCTYPE html>
-
 {% load staticfiles %}
-
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="thomec">
-        <link rel="icon"
-            href="{% static 'images/Letter-P-lg-icon.png' %}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <title>Pepe - {% block title %}Poll System{% endblock %}</title>
+</head>
 
-        <title>
-            Polls - {% block title %}known as Pepe{% endblock %}
-        </title>
+<body id="top">
+    {% include 'polls/nav.html' %}
+    <div id="content">
 
-        <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
-        <script src="{% static 'js/main.min.js' %}"></script>
+        {% block content %}{% endblock %}
+        <div class="container">
+          <br>
+        {% comment %}
+        <div class="alert alert-info">Debug message: {{ message }}</div>
+        {% endcomment %}
+      </div>
+    </div>
+{% include 'polls/footer.html' %}
 
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-    </head>
+<script src="{% static 'js/main.min.js' %}"></script>
 
-    <body id="top">
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
+<script src="{% static 'js/custom.js' %}"></script>
 
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed"
-                        data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="{% url 'polls:index' %}" class="navbar-brand">
-                        Polls
-                    </a>
-                </div>
 
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{% url 'polls:index' %}">Home</a></li>
-                        {% if poll %}
-                            <li>
-                                <a href="{% url 'polls:edit' poll.id %}">
-                                    Edit Poll
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if question %}
-                            <li>
-                                <a href="{% url 'polls:edit' question.id %}">
-                                    Edit Question
-                                </a>
-                            </li>
-                        {% endif %}
 
-                        <li><a href="{% url 'polls:about' %}">About</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="container-fluid">
-            <div class="row">
-
-                <div class="col-md-3 col-sm-4 sidebar">
-                    {% block side %}Empty list{% endblock %}
-                </div>
-
-                <div class="col-md-9 col-md-offset-3 col-sm-8 col-sm-offset-4 main">
-                    <div>
-                        {% block body %}{% endblock %}
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </body>
+</body>
 </html>
-

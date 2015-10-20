@@ -1,6 +1,8 @@
 """URL Routing for pollit"""
 
 from django.conf.urls import patterns, url
+
+from pollit import views
 from pollit.models import Poll
 
 COMMENT_INFO_DICT = {
@@ -13,21 +15,12 @@ COMMENT_INFO_DICT = {
 YMDS_REGEX = r'(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\d{1,2})/(?P<slug>[\w\-]+)/'
 
 urlpatterns = patterns('',
-    url(r'^$',
-        'pollit.views.index',
-        name='pollit_index'),
-    url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<slug>[\w\-]+)/$',
-        'pollit.views.detail_old',
-        name='pollit_detail_old'),
-    url('^%s$' % YMDS_REGEX,
-        'pollit.views.detail',
-        name='pollit_detail'),
-    url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<slug>[\w\-]+)/results/$',
-        'pollit.views.results_old',
-        name='pollit_results_old'),
-    url(r'^{0}results/$'.format(YMDS_REGEX),
-        'pollit.views.results',
-        name='pollit_results'),
+    url(r'^$', views.index, name='index'),
+	url(r'^(?P<poll>\d+)/$', views.index, name='detail'),
+    #url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<slug>[\w\-]+)/$', 'pollit.views.detail_old', name='pollit_detail_old'),
+    #url('^%s$' % YMDS_REGEX, 'pollit.views.detail', name='pollit_detail'),
+    #url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<slug>[\w\-]+)/results/$', 'pollit.views.results_old', name='pollit_results_old'),
+    #url(r'^{0}results/$'.format(YMDS_REGEX), 'pollit.views.results', name='pollit_results'),
     url('^%scomments/$' % YMDS_REGEX,
         'django.views.generic.date_based.object_detail',
         kwargs=COMMENT_INFO_DICT,

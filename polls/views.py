@@ -4,6 +4,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 from polls.models import *
 from polls.forms import *
@@ -51,6 +52,11 @@ def question(request, question_id):
     poll = question.poll
     answers = question.answer_set.all()
     sessionid = request.session.session_key
+
+    print("answer 3:\n"+str(answers[3].__dict__))
+    print("image_id:\n"+str(answers[3].image_id))
+    print("image:\n"+str(answers[3].image.image))
+
     
     voted = Vote.objects.filter(question=question, sessionid=sessionid)
     if len(voted) == 1:
@@ -61,7 +67,7 @@ def question(request, question_id):
         message = ""
 
     context = {'poll': poll, 'question': question,
-            'answers': answers, 'message': message,}
+            'answers': answers, 'message': message, 'prefix': settings.MEDIA_ROOT+"/"}
 
     return render(request, 'polls/question.html', context)
 

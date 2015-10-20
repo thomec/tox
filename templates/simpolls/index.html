@@ -1,0 +1,71 @@
+{% extends 'polls/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Index{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1>Polls</h1>
+    </div>
+
+        <h1>Create a new Poll</h1>
+        <div class="row">
+	    <div class="col-sm-8">
+                <form id="form" class="form-inline" method="POST"
+                    action="{% url 'polls:index' %}">
+                    {% csrf_token %}
+                    {% for field in form %}
+
+                    <div class="form-group">
+
+                    	<div id="{{ field.auto_id }}_container" class="form-group">
+			    <div class="col-sm-2 control-label">
+				{{ field.label_tag }}
+			    </div>
+                            <div>
+                                {{ field }}
+                            </div>
+			    <div id="{{ field.auto_id }}_errors">
+                                {% for error in field.errors %}
+                                <p class="text-danger">
+                                {{ error }}
+                                </p>
+                                {% endfor %}
+			    </div>
+			</div>
+                    </div>
+                    {% endfor %}
+                    <div><p>&nbsp;</p><div>
+                    <button class="btn btn-success" type="submit" name="submit" value="Edit">
+                        <i class="fa fa-check"></i>&nbsp;Save
+                    </button>
+                    <div><p>&nbsp;</p><div>
+                </form>
+            </div>
+        </div>
+
+    <div class="row placeholders">
+        <div class="col-xs-12 col-sm-12 placeholder">
+            <a href="{% url 'polls:polls' %}" class="btn btn-primary btn-block" role="button">
+                <h3>Popular Polls</h3>
+            </a>
+
+            {% if polls %}
+                <ul class="list-group text-left">
+                    {% for poll in polls %}
+                        <li class="list-group-item">
+                            <a href="{% url 'polls:poll' poll=poll.id %}">
+                                {{ poll.title }}
+                                 ({{ poll.pub_date }}) - {{ poll.question }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <strong>No polls present</strong>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}

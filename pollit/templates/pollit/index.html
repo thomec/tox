@@ -2,7 +2,7 @@
 {% if poll_list %}
 <ul>
 {% for poll in poll_list %}
-   <li><a href="{% url poll.get_absolute_url %}">{{ poll.question }}</a>
+   <li><a href="{% url 'pollit:detail' poll.id %}">{{ poll.question }}</a>
 	{% if poll.is_expired %}Closed{% else %}Open{% endif %}
 	<a href="{{ poll.get_absolute_results_url }}">View the Results</a>
 	<a href="{{ poll.get_absolute_comments_url }}">View the Comments</a>

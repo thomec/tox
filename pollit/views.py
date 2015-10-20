@@ -3,7 +3,7 @@ import datetime
 import hashlib
 from django.conf import settings
 from django.http import Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
 from pollit.models import Poll, PollExpired
@@ -19,9 +19,8 @@ def index(request, count=10, template_name="pollit/index.html"):
     """
     polls = Poll.objects.get_latest_polls(count=count, include_expired=True)
     
-    return render_to_response(template_name,
-                              {'poll_list': polls},
-                              context_instance=RequestContext(request))
+    return render(request, template_name, {'poll_list': polls})
+
 
 def detail_old(request, year, month, slug, template_name="pollit/detail.html"):
     """A backwards-compatible way to handle the old urls"""

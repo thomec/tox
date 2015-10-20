@@ -2,7 +2,7 @@
 
 
 from django.contrib import admin
-from polls.models import Poll, Question, Answer
+from polls.models import *
 
 
 class QuestionInline(admin.TabularInline):
@@ -43,7 +43,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
     fieldsets = (
             ('Poll', {'fields': ('poll',), 'classes': ('collapse',)}),
-        ('Question', {'fields': ['number', 'text']}),
+        ('Question', {'fields': ['image', 'number', 'text']}),
         )
     inlines = [AnswerInline]
         
@@ -52,12 +52,20 @@ class AnswerAdmin(admin.ModelAdmin):
     
     fieldsets = [
             ('Question', {'fields': ('question',), 'classes':('collapse',)}),
-        ('Answer', {'fields': ('number', 'text')}),
+            ('Answer', {'fields': ('image', 'number', 'text')}),
     ]
+
+
+class ImageAdmin(admin.ModelAdmin):
+
+    fieldsets = [
+            (None, {'fields': ('image', 'title', 'question_text', 'answer_text')}),
+            ]
 
 
 admin.site.register(Poll, PollAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)
+admin.site.register(Image, ImageAdmin)
 
 

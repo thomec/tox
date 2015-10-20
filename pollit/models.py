@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 from django.db.models import permalink
 from django.conf import settings
 from django.http import Http404
+
+from django.shortcuts import render
+from django.core.urlresolvers import reverse
+
 from pollit.settings import AUTHENTICATION_REQUIRED
 
 MULTIPLE_SITES = getattr(settings, 'POLLIT_MULTIPLE_SITES', False)
@@ -86,6 +90,7 @@ class Poll(models.Model):
     question = models.CharField(max_length=255)
     slug = models.SlugField()
     pub_date = models.DateTimeField(auto_now_add=True)
+
     if MULTIPLE_SITES:
         sites = models.ManyToManyField(Site, 
             related_name="polls")
@@ -105,14 +110,10 @@ class Poll(models.Model):
     
     #@permalink
     def get_absolute_url(self):
-        """
-        The absolute url for this poll
-        """
-        return ('pollit_detail', None, {
-                'year': self.pub_date.year,
-                'month': self.pub_date.strftime('%b').lower(),
-                'day': self.pub_date.day,
-                'slug': self.slug })
+
+        params = (self.pub_date.year, self.pub_date.month, self.pub_date.day, self.slug)
+        return reverse('pollit_detail', args=(poll.id, ))
+        pass
     
     #@permalink
     def get_absolute_results_url(self):

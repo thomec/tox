@@ -4,58 +4,40 @@
 
 {% block title %}Results{% endblock %}
 
-{% block body %}
-    <div class="page-header">
-        <h1>{{ poll.title }}</h1>
+{% block content %}
+<div class="container">
+
+  <h1><i class="fa fa-bar-chart"></i> {{ question.poll.title }}</h1>
+
+  <div class="row">
+
+    <div class="col-sm-5">
+      <h2>{{ question.text }}</h2>
+      <ul class="list-group resultList">
+      
+        {% for answer in question.answer_set.all %}
+        <li class="list-group-item answers">
+          <i class="fa fa-thumbs-up"></i>
+          <span class="chartlabels">{{ answer.text }}</span>
+          <span class="votes badge">{{ answer.count }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="buttons">
+        <a href="{% url 'polls:question' question.id %}" class="btn btn-custom">
+          <i class="fa fa-thumbs-up"></i> Vote again
+        </a>
+        <button class="btn btn-custom reload">
+          <i class="fa fa-refresh"></i> Refresh Page
+        </button>
+      </p>
     </div>
 
-    <div class="row placeholders">
-        <div class="col-xs-12 col-sm-12 placeholder">
-
-            <div class="panel panel-primary">
-                <a href="{% url 'polls:poll' poll=poll.id %}" class="btn btn-primary btn-block"> 
-                    <h3>{{ poll.question }}</h3>
-                </a>
-            </div>
-
-            {% if choices %}
-                <div class="row placeholders">
-                    <div class="col-xs-6">
-                        <ul class="list-group placeholders">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        Choice
-                                    </div>
-                                    <div class="col-sm-6">
-                                        Votes
-                                    </div>
-                                </div>
-                            </li>
-                            {% for choice in choices %}
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            {{ choice.number }}. {{ choice.text }}
-                                        </div>
-                                        <div class="col-sm-6">
-                                            {{ choice.count_votes }}
-                                        </div>
-                                    </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="col-xs-6">
-                        -- here should be java script output --
-                        <script>
-                        </script>
-                    </div>
-                </div>
-            {% else %}
-                <strong>No questions available</strong>
-            {% endif %}
-
-        </div>
+    <div class="col-sm-7">
+      <div class="ct-chart ct-golden-section ct-negative-labels"></div>
     </div>
+
+  </div>
+
+</div><!--container-->
 {% endblock %}

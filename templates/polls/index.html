@@ -1,71 +1,26 @@
-{% extends 'polls/base.html' %}
+{% extends 'polls/base.html' %} {% load staticfiles %} {% block content %}
+<div class="indexheader" data-top="background-position:0px 0px;" data-300="background-position:0px -700px;">
+  <div class="container" data-top="opacity: 1;" data-200="opacity: 0">
+    <h1>Welcome!</h1>
+    <h3>Choose a poll from below or <a href="{% url 'polls:new_poll' %}">create your own</a></h3>
+    <a class="btn btn-custom btn-lg" href="{% url 'polls:about' %}">Learn more</a>
+  </div>
+</div>
 
-{% load staticfiles %}
+<div class="container">
+  <h1>Choose a poll</h1>
 
-{% block title %}Index{% endblock %}
+  {% if polls %}
+  <ul class="list-group">
+    {% for poll in polls %}
+    <li class="list-group-item">
+      <a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No polls are available, <a href="{% url 'polls:new_poll' %}">create one</a>.</p>
+  {% endif %}
 
-{% block body %}
-    <div class="page-header">
-        <h1>Polls</h1>
-    </div>
-
-        <h1>Create a new Poll</h1>
-        <div class="row">
-	    <div class="col-sm-8">
-                <form id="form" class="form-inline" method="POST"
-                    action="{% url 'polls:index' %}">
-                    {% csrf_token %}
-                    {% for field in form %}
-
-                    <div class="form-group">
-
-                    	<div id="{{ field.auto_id }}_container" class="form-group">
-			    <div class="col-sm-2 control-label">
-				{{ field.label_tag }}
-			    </div>
-                            <div>
-                                {{ field }}
-                            </div>
-			    <div id="{{ field.auto_id }}_errors">
-                                {% for error in field.errors %}
-                                <p class="text-danger">
-                                {{ error }}
-                                </p>
-                                {% endfor %}
-			    </div>
-			</div>
-                    </div>
-                    {% endfor %}
-                    <div><p>&nbsp;</p><div>
-                    <button class="btn btn-success" type="submit" name="submit" value="Edit">
-                        <i class="fa fa-check"></i>&nbsp;Save
-                    </button>
-                    <div><p>&nbsp;</p><div>
-                </form>
-            </div>
-        </div>
-
-    <div class="row placeholders">
-        <div class="col-xs-12 col-sm-12 placeholder">
-            <a href="{% url 'polls:polls' %}" class="btn btn-primary btn-block" role="button">
-                <h3>Popular Polls</h3>
-            </a>
-
-            {% if polls %}
-                <ul class="list-group text-left">
-                    {% for poll in polls %}
-                        <li class="list-group-item">
-                            <a href="{% url 'polls:poll' poll=poll.id %}">
-                                {{ poll.title }}
-                                 ({{ poll.pub_date }}) - {{ poll.question }}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>No polls present</strong>
-            {% endif %}
-        </div>
-
-    </div>
+</div><!--container-->
 {% endblock %}

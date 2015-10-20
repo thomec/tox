@@ -23,10 +23,18 @@
         {% csrf_token %}
           
         {% for answer in answers %}
+        {% if answer.image %}
+        <button class="btn btn-custom btn-lg" type="submit" name="answer"
+            id="answer{{ forloop.counter }}" value="{{ answer.id }}">
+          <img src="{{ answer.image.image.url }}">
+          {{ answer.text }}
+        </button>
+        {% else %}
         <button class="btn btn-custom btn-lg" type="submit" name="answer"
             id="answer{{ forloop.counter }}" value="{{ answer.id }}">
           {{ answer.text }}
         </button>
+        {% endif %}
         {% endfor %}
         
       </form>

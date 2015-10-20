@@ -58,7 +58,8 @@ if settings.DEBUG:
 else:
     urlpatterns += static(
             settings.STATIC_URL,
-            document_root=settings.STATIC_ROOT
+            settings.MEDIA_URL,
+            document_root=settings.STATIC_ROOT,
             )
 # endewenn
 
