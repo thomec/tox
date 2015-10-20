@@ -53,11 +53,6 @@ def question(request, question_id):
     answers = question.answer_set.all()
     sessionid = request.session.session_key
 
-    print("answer 3:\n"+str(answers[3].__dict__))
-    print("image_id:\n"+str(answers[3].image_id))
-    print("image:\n"+str(answers[3].image.image))
-
-    
     voted = Vote.objects.filter(question=question, sessionid=sessionid)
     if len(voted) == 1:
         message = "You have already voted on this question"

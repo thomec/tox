@@ -46,6 +46,8 @@ class AnswerForm(forms.ModelForm):
         model = Answer
         fields = ('text',)
         # ToDo: field 'question' as choice set from selected poll
+        widgets = {'text': forms.TextInput(attrs={'class': 'form-control'}),}
+
 
 
 class NewPollForm(forms.Form):
