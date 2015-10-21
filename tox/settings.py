@@ -47,7 +47,8 @@ INSTALLED_APPS = (
         'registration', # django-registration-redux
         'rango',
         'polls',
-        'crispy-forms',
+        'crispy_forms',
+        'mathapp',
         'pollit',
         'pollngo',
         )

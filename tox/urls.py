@@ -43,7 +43,8 @@ urlpatterns = [
         url(r'^polls/', include('polls.urls', namespace='polls')),
         url(r'^pollit/', include('pollit.urls', namespace='pollit')),
         url(r'^pollngo/', include('pollngo.urls', namespace='pollngo')),
-        url(r'^accounts/', include('registration.backends.simple.urls'))
+        url(r'^accounts/', include('registration.backends.simple.urls')),
+        url(r'^mathapp/', include('mathapp.urls', namespace='ma'))
         ]
 
 if settings.DEBUG:

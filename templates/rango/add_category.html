@@ -2,26 +2,41 @@
 
 {% load staticfiles %}
 
-{% block title %}{{ category.name }} - {{ category.slug }}{% endblock %}
+{% block title %}
+{{ category.name }} - {{ category.slug }}
+{% endblock %}
         
 {% block body %}
+<form role="form" id="category_form" method="POST" action="{% url 'rango:add_category' %}">
+  <h2 class="form-signing-heading">Add category</h2>
 
-    <form role="form" id="category_form" method="POST" action="{% url 'rango:add_category' %}">
-        <h2 class="form-signing-heading">Add category</h2>
+  {% csrf_token %}
+  
+  {% for hidden in form.hidden_fields %}
+  {{ hidden }}
+  {% endfor %}
 
-        {% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
+  {% for field in form.visible_fields %}
+  <div class="form-group">
 
-        {% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}
-            {{ field }} <br />
-        {% endfor %}
+    {% if field.errors %}
+    <div class="text-danger error-message small">
+      {{ field.errors }}
+    </div>
+    {% endif %}
+  
+    <label>{{ field.label }}</label>
+      {{ field }}
+    <p> 
+      {{ field.help_text }}
+    </p>
 
-        <button class="btn btn-primary" type="submit" name="submit">
-            Add category
-        </button>
-    </form>
+    <br />
+  </div>
+  {% endfor %}
+  
+  <button class="btn btn-primary" type="submit" name="submit">
+    Add category
+  </button>
+</form>
 {% endblock %} 
