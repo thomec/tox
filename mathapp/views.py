@@ -3,9 +3,19 @@
 
 from django.shortcuts import render
 
+from mathapp.forms import *
+
 
 def index(request):
-    context = {}
+
+    form = ExampleForm(request.POST or None)
+    context = {'form': form}
+
+    if form.is_valid():
+        pass
+    else:
+        pass
+
     return render(request, 'ma/index.html', context)
 
 

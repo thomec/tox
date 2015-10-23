@@ -1,10 +1,12 @@
 {% extends 'ma/base.html' %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
-{% block content %}
+{% block main %}
 <div class="indexheader" data-top="background-position:0px 0px;" data-300="background-position:0px -700px;">
   <div class="container" data-top="opacity: 1;" data-200="opacity: 0">
     <h1>Welcome!</h1>
+    {% crispy form %}
   </div>
 </div>
 

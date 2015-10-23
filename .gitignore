@@ -67,3 +67,6 @@ node_modules/
 bower_components/
 
 
+# images db in static
+media/images/polls
+
