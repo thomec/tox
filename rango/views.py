@@ -5,7 +5,7 @@ from datetime import datetime
 
 from django.shortcuts import (
         render, get_object_or_404, get_list_or_404, redirect
-)
+        )
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,6 @@ from django.contrib.auth.decorators import login_required
 from rango.models import Category, Page
 from rango.forms import CategoryForm, PageForm, UserForm, UserProfileForm
 from rango.bing_search import run_query
-
 
 
 def index(request):
@@ -54,13 +53,11 @@ def index(request):
     return render(request, 'rango/index.html', context)
 
 
-
 def about(request):
     visits = request.session.get('visits') or 0
     print(type(visits))
     context = {'visits': visits}
     return render(request, 'rango/about.html', context)
-
 
 
 def category(request, slug):
@@ -78,7 +75,6 @@ def category(request, slug):
     return render(request, 'rango/category.html', context)
 
 
-
 @login_required
 def add_category(request):
 
@@ -93,7 +89,6 @@ def add_category(request):
         print(form.errors)
 
     return render(request, 'rango/add_category.html', context)
-
 
 
 @login_required
@@ -118,7 +113,6 @@ def add_page(request, slug):
     return render(request, 'rango/add_page.html', context)
 
 
-
 @login_required
 def like_category(request):
     
@@ -136,7 +130,6 @@ def like_category(request):
     return HttpResponse(likes)
 
 
-
 @login_required
 def auto_add_page(request):
 
@@ -150,9 +143,6 @@ def auto_add_page(request):
         page = Page.objects.get_or_create(
                     category=category, title=title, url=url)
         pages = Page.objects.filter(category=category).order_by('-views')
-
-
-
 
 
 def get_category_list(max_results=0, starts_with=''):
@@ -169,7 +159,6 @@ def get_category_list(max_results=0, starts_with=''):
     return cat_list
 
 
-
 def suggest_category(request):
 
     cats = []
@@ -178,8 +167,6 @@ def suggest_category(request):
     context = {'cats': cats}
 
     return render(request, 'rango/cats.html', context)
-
-
 
 
 def search(request):
@@ -196,7 +183,6 @@ def search(request):
     return render(request, 'rango/search.html', {'results': results})
 
 
-
 def track(request, page):
 
     page = get_object_or_404(Page, id=page)
@@ -206,17 +192,34 @@ def track(request, page):
     return redirect(page.url)
 
 
-
 def add_profile(request, ):
     return render(request, 'rango/add_profile.html')
-
-
 
 
 def profile(request, ):
     return render(request, 'rango/profile.html')
 
 
+def register(request):
 
+    registered = False
+    user_form = UserForm(request.POST or None)
+    profile_form = UserProfileForm(request.POST or None)
 
+    if user_form.is_valid() and profile_form.is_valid():
+        user = user_form.save()
+        user.set_password(user.password)
+        user.save()
+        profile = profile_form.save(commit=False)
+        profile.user = user
+
+        if 'picture' in request.FILES:
+            profile.picture = request.FILES['picture']
+
+        profile.save()
+        registered = True
+
+    return render(request,
+            'rango/register.html',
+            {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
