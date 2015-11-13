@@ -1,0 +1,119 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+{% block title %}New Poll{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>
+    <i class="fa fa-pencil"></i>&nbsp;Create a new Poll
+  </h1>
+
+  <div class="row">
+    <div class="col-sm-8">
+      <form id="create_poll_form" method="post" action="{% url 'polls:create_poll' %}">
+        {% csrf_token %}
+        
+        {% for hidden in poll_form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+
+        {% for hidden in question_form.hidden_fields %}
+        {{ hiddem }}
+        {% endfor %}
+
+        {% if poll_form.non_field_errors %}
+        <ul>
+		      {% for error in form.non_field_errors %}
+		      <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+        {% endif %}
+
+        {% if question_form.non_field_errors %}
+        <ul>
+		      {% for error in form.non_field_errors %}
+		      <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+        {% endif %}
+
+        {% for field in poll_form.visible_fields %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+          
+          {% if field.errors %}
+          <ul>
+            {% for error in field.errors %}
+            <li class="text-danger error-message small">
+              &nbsp;
+              <i class="fa fa-exclamation-triangle"></i>
+              &nbsp;{{ error }}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {{ field }}
+        </div>
+        {% endfor %}
+
+        {% for field in question_form.visible_fields %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+                    
+          {% if field.errors %}
+          <ul>
+            {% for error in field.errors %}
+            <li class="text-danger error-message small">
+              &nbsp;
+              <i class="fa fa-exclamation-triangle"></i>
+              &nbsp;{{ error }}
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+
+          {{ field }}
+        </div>
+        {% endfor %}
+        
+        {{ formset.management_form }}
+	
+	      {% for form in formset %}
+	  
+        {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+        {% endfor %}
+            
+        {% if form.non_field_errors %}
+	      <ul>
+		      {% for error in form.non_field_errors %}
+		      <li>{{ error }}</li>
+	        {% endfor %}
+	      </ul>
+	      {% endif %}
+
+	      {% for field in form.visible_fields %}
+	      <div id="{{ field.auto_id }}_container">
+		      {{ field.help_text }}
+		      <div>
+		        {{ field.label_tag }} {{ field }}
+          </div>
+		      <div id="{{ field.auto_id }}_errors">
+			      {{ field.errors }}
+		      </div>
+	      </div>
+	      {% endfor %}
+	  
+        {% endfor %}
+
+        <button class="btn btn-custom" type="submit" name="submit"
+            value="Create new Answer">
+          <i class="fa fa-pencil"></i>&nbsp;Create
+        </button>
+      </form>
+    </div>
+  </div>
+  
+</div><!--container-->
+{% endblock %}

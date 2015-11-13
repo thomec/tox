@@ -6,46 +6,100 @@ from django.db import models
 from django.utils import timezone
 
 
-class Image(models.Model):
+class Picture(models.Model):
 
-    title = models.CharField(blank=True, max_length=60)
-    image = models.ImageField(upload_to='images/polls')
-    answer_text = models.CharField(blank=True, max_length=255, help_text="default Question")
-    question_text = models.CharField(blank=True, max_length=255, help_text="default Answer")
+    caption = models.CharField(
+            'Caption',
+            max_length = 255,
+            )
+    source = models.ImageField(upload_to='pictures')
 
     def __str__(self):
-        return self.title
+        return self.caption
 
 
 class Poll(models.Model):
     
-    title = models.CharField(max_length=255, help_text="Text")
-    description = models.CharField(max_length=4095, blank=True, help_text="Description")
-    #image = models.ImageField(blank=True, help_text="Image")
-    pub_date = models.DateTimeField('date published', default=timezone.now, help_text="publish date")
+    title = models.CharField(
+            'Poll Title',
+            max_length = 255,
+            help_text = "Provide a title for the Poll."
+            )
+    description = models.CharField(
+            'Poll Description',
+            max_length = 4095,
+            blank = True,
+            help_text='Describe the Poll if you like.'
+            )
+    pub_date = models.DateTimeField(
+            'Publishing Date and Time',
+            default = timezone.now,
+            help_text = 'Date and Time to start the Poll.'
+            )
     
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-pub_date', 'title']
+
 
 class Question(models.Model):
 
-    poll = models.ForeignKey(Poll, help_text="Poll")
-    text = models.CharField(blank=True, max_length=255, help_text="Text")
-    image = models.ForeignKey(Image, null=True, blank=True, help_text="Image")
-    number = models.PositiveSmallIntegerField(default=0, help_text="Number")
+    poll = models.ForeignKey(
+            Poll,
+            help_text = "Poll"
+            )
+    text = models.CharField(
+           'Question Text',
+           max_length = 255,
+           blank = True,
+           help_text = 'Ask a Question'
+           )
+    picture = models.ForeignKey(
+            Picture,
+            null = True,
+            help_text = 'Add a Picture to this Question.'
+            )
+    number = models.PositiveSmallIntegerField(
+            'Question Number',
+            default = 1,
+            help_text = 'If you have more than one Question, they are ordered by their Number.'
+            )
 
     def __str__(self):
         return self.text
 
+    class Meta:
+        ordering = ['number']
+
 
 class Answer(models.Model):
 
-    question = models.ForeignKey(Question)
-    text = models.CharField(blank=True, max_length=255, help_text="Text")
-    image = models.ForeignKey(Image, null=True, blank=True, help_text="Image")
-    number = models.PositiveSmallIntegerField(default=0, help_text="Number")
-    count = models.IntegerField(default=0)
+    question = models.ForeignKey(
+            Question,
+            )
+    text = models.CharField(
+            'Answer Text',
+            max_length=255,
+            blank = True,
+            help_text = 'Add a possible choice to answer the Question'
+            )
+    picture = models.ForeignKey(
+            Picture,
+            null=True,
+            help_text='Add a Picture to this Answer.'
+            )
+    number = models.PositiveSmallIntegerField(
+            'Number',
+            default = 0,
+            help_text = 'The Number is used to order the Answers.'
+            )
+    value = models.IntegerField(
+            'Value',
+            blank = True,
+            )
+    count = models.IntegerField(default=0, editable=False)
 
     def __str__(self):
         return self.text
@@ -67,7 +121,4 @@ class Vote(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
-
-
-
-
+        

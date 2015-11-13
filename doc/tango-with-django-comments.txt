@@ -1,0 +1,13 @@
+Tango with Django 1.7
+
+12.3.7 Modyfying the Registration Flow
+
+Overriding the get_success_url didn't work for me as expected, instead I
+associated the complete url to the index view in project/urls.py
+
+	urlpatterns = patterns('',
+		...
+	>	url(r'/accounts/register/complete/', views.index),
+		url(r'/accounts/', include('registration.backends.simple.urls')),
+	)
+

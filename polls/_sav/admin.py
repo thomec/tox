@@ -27,43 +27,45 @@ class PollAdmin(admin.ModelAdmin):
     list_filter = ['pub_date']
 
     # admin/polls/polls/<num>/
-    fieldsets = [
-        ('Poll', {'fields': ('title',)}),
+    fieldsets = (
+        ('Poll', {'fields': ['title']}),
         ('Details', {'classes': ('collapse',),
-            'fields': ('description', 'pub_date',)}),
-        ]
+            'fields': ('description', 'pub_date')}),
+    )
     inlines = [QuestionInline]
         
 
 class QuestionAdmin(admin.ModelAdmin):
     
     search_fields = ['text']
-    list_display = ('text', 'number')
+    list_display =('text', 'number')
     list_filter = ['text']
 
-    fieldsets = [
-        ('Poll', {'fields': ('poll',), 'classes': ('collapse',)}),
-        ('Question', {'fields': ('number', 'text', 'picture')}),
-        ]
+    fieldsets = (
+            ('Poll', {'fields': ('poll',), 'classes': ('collapse',)}),
+        ('Question', {'fields': ['image', 'number', 'text']}),
+        )
     inlines = [AnswerInline]
         
 
 class AnswerAdmin(admin.ModelAdmin):
     
     fieldsets = [
-        ('Question', {'fields': ('question',), 'classes':('collapse',)}),
-        ('Answer', {'fields': ('number', 'text', 'picture')}),
-        ]
+            ('Question', {'fields': ('question',), 'classes':('collapse',)}),
+            ('Answer', {'fields': ('image', 'number', 'text')}),
+    ]
 
 
-class PictureAdmin(admin.ModelAdmin):
+class ImageAdmin(admin.ModelAdmin):
 
-    list_display = ('caption', 'source')
-    fieldsets = [(None,  {'fields': ('caption', 'source')})]
+    fieldsets = [
+            (None, {'fields': ('image', 'title', 'question_text', 'answer_text')}),
+            ]
 
 
 admin.site.register(Poll, PollAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Answer, AnswerAdmin)
-admin.site.register(Picture, PictureAdmin)
+admin.site.register(Image, ImageAdmin)
+
 

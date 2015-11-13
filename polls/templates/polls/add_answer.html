@@ -1,0 +1,40 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+
+{% block title %}Add Answer{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h3><a href="{% url 'polls:detail' poll.id %}">{{ poll.title }}</a></h3>
+  <h1>Add an Answer to the Question <a href="{% url 'polls:question' question.id %}">"{{ question.text }}"</a></h1>
+  
+  {% if answers %}
+  <h3>Current choices are:</h3>
+  <ul>
+    {% for choice in answers %}
+    <li>{{ choice }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <h3>No Answers yet</h3>
+  {% endif %}
+
+  <form id="answer_form" method="post" action="{% url 'polls:add_answer' question.id %}">
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+      {{ field.help_text }}
+      {{ field }}
+      <p class="text-danger">{{ field.errors|striptags }}</p>
+      <hr>
+    {% endfor %}
+
+    <button class="btn btn-custom" type="submit" name="submit"  value="Create new Answer">
+      Create</button>
+  </form>
+
+</div><!--container-->
+{% endblock %}

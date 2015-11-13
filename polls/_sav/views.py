@@ -4,6 +4,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 from polls.models import *
 from polls.forms import *
@@ -51,7 +52,7 @@ def question(request, question_id):
     poll = question.poll
     answers = question.answer_set.all()
     sessionid = request.session.session_key
-    
+
     voted = Vote.objects.filter(question=question, sessionid=sessionid)
     if len(voted) == 1:
         message = "You have already voted on this question"
@@ -61,7 +62,7 @@ def question(request, question_id):
         message = ""
 
     context = {'poll': poll, 'question': question,
-            'answers': answers, 'message': message,}
+            'answers': answers, 'message': message, 'prefix': settings.MEDIA_ROOT+"/"}
 
     return render(request, 'polls/question.html', context)
 
@@ -113,7 +114,6 @@ def add_poll(request):
 def add_question(request, poll_id):
     
     poll = get_object_or_404(Poll, pk=poll_id)
-    questions = poll.question_set.all()
     question = Question(poll=poll)
     form = QuestionForm(request.POST or None, instance=question)
     
@@ -124,7 +124,7 @@ def add_question(request, poll_id):
     else:
         print(str(form.errors))
     
-    context = {'poll': poll, 'questions': questions, 'question': question, 'form': form}
+    context = {'poll': poll, 'question': question, 'form': form}
     return render(request, 'polls/add_question.html', context)
 
 
@@ -132,7 +132,6 @@ def add_answer(request, question_id):
 
     question = get_object_or_404(Question, pk=question_id)
     poll = question.poll
-    answers = question.answer_set.all()
     answer = Answer(question=question)
     form = AnswerForm(request.POST or None, instance=answer)
     
@@ -142,65 +141,36 @@ def add_answer(request, question_id):
     else:
         print(form.errors)
 
-    context = {'poll': poll, 'question': question, 'answers': answers,
+    context = {'poll': poll, 'question': question,
             'answer': answer, 'form': form}
     return render(request, 'polls/add_answer.html', context)
 
 
 def new_poll(request):
 
-    form = NewPollForm(request.POST or None)
-    
-    if form.is_valid():
-        poll = Poll(title=form.cleaned_data['poll_title'])
-        poll.save()
+    if request.method == 'POST':
+        form = NewPollForm(request.POST)
 
-        question = Question(poll=poll, text=form.cleaned_data['question_text'], number=1)
-        question.save()
+        if form.is_valid():
+            poll = Poll(title=form.cleaned_data['poll_title'])
+            poll.save()
 
-        answer1 = Answer(question=question, text=form.cleaned_data['answer_one'], number=1)
-        answer2 = Answer(question=question, text=form.cleaned_data['answer_two'], number=2)
+            question = Question(poll=poll, text=form.cleaned_data['question_text'], number=1)
+            question.save()
 
-        answer1.save()
-        answer2.save()
+            answer1 = Answer(question=question, text=form.cleaned_data['answer_one'], number=1)
+            answer2 = Answer(question=question, text=form.cleaned_data['answer_two'], number=2)
 
-        return HttpResponseRedirect(reverse('polls:question', args=(question.id,)))
+            answer1.save()
+            answer2.save()
+
+            return HttpResponseRedirect(reverse('polls:index'))
+        else:
+            print(form.errors)
     else:
-        print("\nForm has errors:\n"+str(form.errors))
+        form = NewPollForm()
 
     return render(request, 'polls/new_poll.html', {'form': form})
-
-
-def create_poll(request):
-
-    poll = Poll()
-    poll.save()
-    question = Question(poll=poll)
-    poll_form = PollForm(request.POST or None, instance=poll)
-    question_form = QuestionForm(request.POST or None, instance=question)
-    formset = AnswerFormSet(request.POST or None, instance=question)
-
-    context = {
-            'poll': poll,
-            'question': question,
-            'poll_form': poll_form,
-            'question_form': question_form,
-            'formset': formset
-            }
-
-    forms_are_valid = (poll_form.is_valid() and
-        question_form.is_valid() and 
-        formset.is_valid())
-
-    if forms_are_valid:
-        poll_form.save()
-        question_form.save()
-        formset.save()
-        return HttpResponseRedirect(reverse('polls:detail', args=(poll.id,)))
-    else:
-        print("\nForm has errors:\n"+str(poll_form.errors))
-
-    return render(request, 'polls/create_poll.html', context)
 
 
 def edit_poll(request, poll_id):

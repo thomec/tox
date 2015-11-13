@@ -17,7 +17,6 @@ urlpatterns = patterns('',
         url(r'^poll/(?P<poll_id>\d+)/add_question/$', views.add_question, name='add_question'),
         url(r'^question/(?P<question_id>\d+)/add_answer/$', views.add_answer, name='add_answer'),
         url(r'^new_poll/$', views.new_poll, name='new_poll'),
-        #url(r'^create_poll/$', views.create_poll, name='create_poll'),
         url(r'^poll/(?P<poll_id>\d+)/edit_poll/$', views.edit_poll, name='edit_poll'),
         url(r'^question/(?P<question_id>\d+)/edit_question/$', views.edit_question, name='edit_question')
 )

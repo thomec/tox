@@ -1,0 +1,52 @@
+{% extends 'polls/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Add Question{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <h1>Add a Question to <a href={% url 'polls:detail' poll.id %}>{{ poll.title }}</a></h1>
+  {% if questions %}
+  <ul>
+    {% for question in questions %}
+    <div class="row">
+      <li>
+        <div class="col-sm-4">
+          {{ question.text }}
+        </div>
+        <div class="col-sm-8">
+          <ul>
+            {% for answer in question.answer_set.all %}
+            <li>{{ answer.text }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </li>
+    </div>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <h3>No Questions in this Poll</h3>
+  {% endif %}
+
+  <form id="question_form form-group" method="post" action="{% url 'polls:add_question' poll.id%}">
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+      {{ hidden }}
+    {% endfor %}
+
+    {% for field in form.visible_fields %}
+    {{ field.help_text }}
+    {{ field }}
+    <p class="text-danger">{{ field.errors|striptags }}</p>
+    <hr>
+    {% endfor %}
+
+    <br>
+    <button class="btn btn-custom" type="submit" name="submit"  value="Create new Question">Create</button>
+  </form>
+
+</div><!--container-->
+{% endblock %}
